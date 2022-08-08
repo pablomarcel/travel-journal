@@ -25,5 +25,11 @@ Guide for travelers around the world.
 
 # Plan a work timeline (Owner: Project Manager)
 ## High level work timeline. List the work items that you plan to complete, organized by each of the 5 remaining weeks until the presentation
-### 'ADD TEXT'
+
+![img.png](img.png)
+
+
+
+
+
 
