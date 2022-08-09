@@ -21,7 +21,7 @@ More valuable posts with positive comments and rating from every user in the wor
 ## Description of the Databases, Collections, Schema, Source of data
   Database name: travel-journal (in MongoDB Atlas);
   Collections: users, posts, comments
-  Schemas:
+  Collection Schemas:
   1/ users {
       userid (_id): string,
       firstName: string,
@@ -76,9 +76,11 @@ More valuable posts with positive comments and rating from every user in the wor
   getAvgRateForPost;
 
 
-### 'ADD TEXT'
 ## External tools (not libraries like React, but separate systems or third party tools, like a second database)
-### 'ADD TEXT'
+For Front-End: redux-toolkit, jwt-decode, bootstrap, react-google-login, react-paginate, react-icons,...
+
+For Back-End: mongoose, express, express-async-handler, bcryptjs, dotenv, jsonwebtoken, nodemon, concurrently, axios, multer, body-parse, cors,...
+
 ## Describe the functionality that the front end app will have
 Home page: display all posts with comments and rating for each post and searching feature
 Login page;
