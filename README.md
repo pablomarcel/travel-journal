@@ -93,7 +93,7 @@ My Favorite Posts: display all the user's favorite posts
 # Plan a work timeline (Owner: Project Manager)
 ## High level work timeline. List the work items that you plan to complete, organized by each of the 5 remaining weeks until the presentation
 
-![img.png](img.png)
+![img.png](assets/img.png)
 
 
 
