@@ -1,0 +1,33 @@
+{
+  "name": "travel-journal",
+  "version": "1.0.0",
+  "description": "C-team final project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/index.js",
+    "server": "nodemon backend/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pablomarcel/travel-journal.git"
+  },
+  "author": "C-team 2022",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pablomarcel/travel-journal/issues"
+  },
+  "homepage": "https://github.com/pablomarcel/travel-journal#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.2",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}

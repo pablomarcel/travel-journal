@@ -52,7 +52,13 @@ More valuable posts with positive comments and rating from every user in the wor
       createdAt: timeStamp,
       updatedAt: timeStamp
     };
-  3/ comments {
+  3/ myFavoritePosts {
+      postId (_id): string,
+      userId: string,
+      createdAt: timeStamp
+    };
+
+  4/ comments {
       commentid (_id): string,
       name: string,
       email: string,
@@ -80,9 +86,9 @@ More valuable posts with positive comments and rating from every user in the wor
 
 
 ## External tools (not libraries like React, but separate systems or third party tools, like a second database)
-For Front-End: redux-toolkit, jwt-decode, bootstrap, react-google-login, react-paginate, react-icons,...
+For Front-End: redux-toolkit, jwt-decode, bootstrap, react-google-login, react-paginate, react-icons, axios,...
 
-For Back-End: mongoose, express, express-async-handler, bcryptjs, dotenv, jsonwebtoken, nodemon, concurrently, axios, multer, body-parse, cors,...
+For Back-End: mongoose, express, express-async-handler, bcryptjs, dotenv, jsonwebtoken, nodemon, concurrently, multer, body-parse, cors,...
 
 ## Describe the functionality that the front end app will have
 Home page: display all posts with comments and rating for each post and searching feature
