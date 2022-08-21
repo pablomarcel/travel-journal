@@ -1,12 +1,11 @@
 const multer = require('multer');
-// const path = require('path');
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'images');
   },
   filename: (req, file, cb) => {
     cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname);
-    // cb(null, file.fieldname + '_' + Date.now() + path.extname(file.originalname))
   }
 });
 const filefilter = (req, file, cb) => {

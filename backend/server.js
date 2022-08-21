@@ -14,10 +14,5 @@ server.use(express.urlencoded({ extended: true }));
 server.use(errorHandler);
 server.use(routes);
 server.use('/images', express.static('images'));
-// server.use('/images', express.static(path.join(__dirname, 'images')));
-// const port = process.env.PORT || 5000;
 
-// server.listen(port, () =>
-//   console.log(`Server is listening on http://localhost:${port}`)
-// );
 module.exports = server;

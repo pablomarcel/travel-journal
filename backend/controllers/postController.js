@@ -7,16 +7,40 @@ const User = require('../models/userModel')
 // @route   GET /api/posts
 // @access  Public
 const getAllPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({})
-
+  // const posts = await Post.find({}).sort({updatedAt: -1})
+  const pipeline = [
+    {
+      '$lookup': {
+        'from': 'users', 
+        'localField': 'user', 
+        'foreignField': '_id', 
+        'as': 'user'
+      }
+    }, {
+      '$sort': {
+        'updatedAt': -1
+      }
+    }
+  ];
+  const posts = await Post.aggregate(pipeline);
   res.status(200).json(posts)
 })
 
+// @desc    Get single post by postId
+// @route   GET /api/posts/post/:postId
+// @access  Public
+const getPostByPostId = asyncHandler(async (req, res) => {
+  const post = await Post.findById(req.params.id)
+
+  res.status(200).json(post)
+})
+
+
 // @desc    Get posts by userId
-// @route   GET /api/posts/:userId
+// @route   GET /api/posts/user
 // @access  Private
 const getPostsByUser = asyncHandler(async (req, res) => {
-  const posts = await Post.find({ user: req.user.id })
+  const posts = await Post.find({ user: req.user.id }).sort({updatedAt: -1})
 
   res.status(200).json(posts)
 })
@@ -28,7 +52,7 @@ const createPost = asyncHandler(async (req, res) => {
   // Check if title and content fields are filled or not
   if (!req.body.title || !req.body.content) {
     res.status(400)
-    throw new Error('Post title or content is missing. Please add these mandatory fields!')
+    throw new Error('Title and content are required!')
   }
   // Get image path from uploaded file
   const image = req.file ? req.file.path : '';
@@ -54,9 +78,14 @@ const createPost = asyncHandler(async (req, res) => {
 // @access  Private
 const updatePost = asyncHandler(async (req, res) => {
   // Get post by id
-  const post = await Post.findById(req.params.id)
-
-  if (!post) {
+  const oldPost = await Post.findById(req.params.id)
+  // Update new image path for post's body
+  if (req.file) {
+    req.body.image = req.file.path;
+  }
+  const image = req.file ? req.file.path : '';
+  
+  if (!oldPost) {
     res.status(400)
     throw new Error('The post not found')
   }
@@ -68,15 +97,15 @@ const updatePost = asyncHandler(async (req, res) => {
   }
 
   // Make sure the logged in user matches the post user
-  if (post.user.toString() !== req.user.id) {
+  if (oldPost.user.toString() !== req.user.id) {
     res.status(401)
     throw new Error('User not authorized')
   }
 
   // Delete the old image if it doesnot match the new one from images folder
-  if (post.image) {
-    if (!req.body.image || req.body.image !== post.image) {
-      fs.unlink(post.image, (err) => {
+  if (oldPost.image) {
+    if (image && image !== oldPost.image) {
+      fs.unlink(oldPost.image, (err) => {
         if (err) throw new Error('Image not found!');
         // if no error, file has been deleted successfully
         // console.log('File deleted!');
@@ -132,6 +161,7 @@ const deletePost = asyncHandler(async (req, res) => {
 
 module.exports = {
   getAllPosts,
+  getPostByPostId,
   getPostsByUser,
   createPost,
   updatePost,

@@ -7,10 +7,10 @@ const User = require('../models/userModel')
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
+  // Assign user info to user's vars 
   const { firstName, lastName, email, password } = req.body;
-  // const images = req.files? req.files : '';
   const image = req.file ? req.file.path : '';
-  // console.log('Image:', image);
+  // Check if these fields are valid or not
   if (!firstName || !lastName || !email || !password) {
     res.status(400)
     throw new Error('Please add all fields')
@@ -35,7 +35,6 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     password: hashedPassword,
     image
-    // images
   })
 
   if (user) {
@@ -45,7 +44,6 @@ const registerUser = asyncHandler(async (req, res) => {
       lastName: user.lastName,
       email: user.email,
       image: user.image,
-      // images: user.images,
       token: generateToken(user._id),
     })
   } else {
@@ -70,7 +68,6 @@ const loginUser = asyncHandler(async (req, res) => {
       lastName: user.lastName,
       email: user.email,
       image: user.image,
-      // images: user.images,
       token: generateToken(user._id),
     })
   } else {
@@ -86,6 +83,14 @@ const getMe = asyncHandler(async (req, res) => {
   res.status(200).json(req.user)
 })
 
+// @desc    Get user data by userId
+// @route   GET /api/users/:id
+// @access  public
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+  res.status(200).json(user)
+})
+
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -97,4 +102,5 @@ module.exports = {
   registerUser,
   loginUser,
   getMe,
+  getUserById,
 }
