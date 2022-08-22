@@ -15,27 +15,6 @@ import Profile from "./pages/Profile";
 // import Spinner from './components/Spinner'
 // import { getAllPosts, reset } from './features/posts/postSlice'
 function App() {
-
-  // const dispatch = useDispatch()
-
-  // const { posts, isLoading, isError, message } = useSelector((state) => state.posts)
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     console.log(message)
-  //   }
-
-  //   dispatch(getAllPosts())
-
-  //   return () => {
-  //     dispatch(reset())
-  //   }
-  // }, [isError, message, dispatch])
-
-  // if (isLoading) {
-  //   return <Spinner />
-  // }
-
   return (
     <>
       <Router>

@@ -19,7 +19,17 @@ const getAllMyFavoritePosts = asyncHandler(async (req, res) => {
         'from': 'posts', 
         'localField': 'post', 
         'foreignField': '_id', 
-        'as': 'post'
+        'as': 'post', 
+        'pipeline': [
+          {
+            '$lookup': {
+              'from': 'users', 
+              'localField': 'user', 
+              'foreignField': '_id', 
+              'as': 'author'
+            }
+          }
+        ]
       }
     }, {
       '$sort': {

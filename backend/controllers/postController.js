@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const fs = require('fs');
 const Post = require('../models/postModel')
 const User = require('../models/userModel')
+const ObjectId = require('mongodb').ObjectId;
 
 // @desc    Get all posts
 // @route   GET /api/posts
@@ -14,7 +15,7 @@ const getAllPosts = asyncHandler(async (req, res) => {
         'from': 'users', 
         'localField': 'user', 
         'foreignField': '_id', 
-        'as': 'user'
+        'as': 'author'
       }
     }, {
       '$sort': {
@@ -30,7 +31,23 @@ const getAllPosts = asyncHandler(async (req, res) => {
 // @route   GET /api/posts/post/:postId
 // @access  Public
 const getPostByPostId = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.id)
+  // const post = await Post.findById(req.params.id);
+  const pipeline = [
+    {
+      '$match': {
+        '_id': ObjectId(req.params.id)
+      }
+    }, {
+      '$lookup': {
+        'from': 'users', 
+        'localField': 'user', 
+        'foreignField': '_id', 
+        'as': 'author'
+      }
+    }
+  ];
+
+  const post = await Post.aggregate(pipeline);
 
   res.status(200).json(post)
 })

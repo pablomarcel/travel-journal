@@ -4,7 +4,6 @@ import ImageSlideShow from '../components/ImageSlideShow';
 import Post from '../components/Post';
 import ReactPaginate from 'react-paginate';
 import '../components/Pagination.css';
-// import PropTypes from 'prop-types';
 import { FcPrevious, FcNext } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPosts, reset } from '../features/posts/postSlice'
@@ -72,7 +71,6 @@ const Home = () => {
           {posts.length > 0 ? (
             <>
               {displayPosts}
-              {/* {posts.map((post) => <Post key={post.id} post={post} showUsername={true} fromFavoritePostPage={false} />)} */}
             </>
             ) : ('')
           }
@@ -100,9 +98,5 @@ const Home = () => {
     </Container>
   );
 }
-
-// Home.propTypes = {
-//   posts: PropTypes.arrayOf(PropTypes.object).isRequired
-// }
 
 export default Home
