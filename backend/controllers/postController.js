@@ -18,6 +18,8 @@ const getAllPosts = asyncHandler(async (req, res) => {
         'as': 'author'
       }
     }, {
+      "$unwind": "$author"
+    }, {
       '$sort': {
         'updatedAt': -1
       }
@@ -44,6 +46,8 @@ const getPostByPostId = asyncHandler(async (req, res) => {
         'foreignField': '_id', 
         'as': 'author'
       }
+    }, {
+      "$unwind": "$author"
     }
   ];
 
@@ -128,7 +132,7 @@ const updatePost = asyncHandler(async (req, res) => {
         // console.log('File deleted!');
       });      
     }
-  }  
+  }
 
   // console.log(req.body);
   const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, {

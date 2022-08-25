@@ -128,6 +128,20 @@ function PostForm({ postId, togglePostForm, returnAddForm }) {
         <h3 className="mb-2 title">{postId ? "Update Post" : "New Post"}</h3>
 
         <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Control
+              type="file"
+              accept='image/*'
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+          </Form.Group>
+          {image? (
+            <Form.Group controlId="formCard" className="mb-3">
+              <Card>
+                <Card.Img variant="top" src={imagePath} />
+              </Card>
+            </Form.Group>
+          ) : null}
           <Form.Group className="mb-3">
             <Form.Control
               type="text"
@@ -211,20 +225,6 @@ function PostForm({ postId, togglePostForm, returnAddForm }) {
               onChange={onChange}
             />
           </Form.Group>
-          <Form.Group controlId="formFile" className="mb-3">
-            <Form.Control
-              type="file"
-              accept='image/*'
-              onChange={(e) => setImage(e.target.files[0])}
-            />
-          </Form.Group>
-          {image? (
-            <Form.Group controlId="formCard" className="mb-3">
-              <Card>
-                <Card.Img variant="top" src={imagePath} />
-              </Card>
-            </Form.Group>
-            ) : null}
  
           <div className="d-grid gap-2">
             <Button variant="primary" type="Submit">

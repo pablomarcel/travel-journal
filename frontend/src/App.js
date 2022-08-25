@@ -10,10 +10,7 @@ import UserHome from "./pages/UserHome";
 import PostDetail from "./pages/PostDetail";
 import FavoritePost from "./pages/FavoritePost";
 import Profile from "./pages/Profile";
-// import { useEffect } from 'react'
-// import { useSelector, useDispatch } from 'react-redux'
-// import Spinner from './components/Spinner'
-// import { getAllPosts, reset } from './features/posts/postSlice'
+import UserForm from './components/UserForm';
 function App() {
   return (
     <>
@@ -27,6 +24,7 @@ function App() {
           <Route path="/favoritePost" element={<FavoritePost />} />
           <Route path="/postDetail/:id" element={<PostDetail />} />
           <Route path="/profile/:userId" element={<Profile />} />
+          <Route path="/userForm" element={<UserForm />} />
         </Routes>
         <Footer />
       </Router>

@@ -6,14 +6,16 @@ const Post = ({ post, showUsername, fromFavoritePostPage }) => {
   if (!post) {return}
   // Get the post author name
   const author = showUsername ? 
-                  (!fromFavoritePostPage ? 
-                    post.author? ` - Author: ${post.author[0].firstName} ${post.author[0].lastName}`:''
-                    : post.post? ` - Author: ${post.post[0].author[0].firstName} ${post.post[0].author[0].lastName}`:'')
+                  (fromFavoritePostPage ?
+                    post.post? ` - Author: ${post.post.author.firstName} ${post.post.author.lastName}`:''
+                    : 
+                    post.author? ` - Author: ${post.author.firstName} ${post.author.lastName}`:'')
                   :'';
 
-  const postId = fromFavoritePostPage ? post.post[0]._id : post._id;
-  const title = fromFavoritePostPage ? post.post[0].title : post.title;
-  const image = fromFavoritePostPage ? post.post[0].image : post.image;
+  const postId = fromFavoritePostPage ? post.post._id : post._id;
+  const title = fromFavoritePostPage ? post.post.title : post.title;
+  const image = fromFavoritePostPage ? post.post.image : post.image;
+  
   const postDate = post.updatedAt ? `Last modified: ${formatDistance(new Date(post.updatedAt), new Date())}` : '';
   
   return (

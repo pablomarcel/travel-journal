@@ -58,7 +58,7 @@ const PostDetail = () => {
             <Card.Body>
               <Card.Text>
                 {post.updatedAt? `Last modified: ${formatDistance(new Date(post.updatedAt), new Date())}`:''}
-                {post.author ? ` - Author: ${post.author[0].firstName} ${post.author[0].lastName}`:''}
+                {post.author ? ` - Author: ${post.author.firstName} ${post.author.lastName}`:''}
               </Card.Text>
             </Card.Body>
           </Card>

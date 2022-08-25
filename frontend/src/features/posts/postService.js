@@ -42,7 +42,7 @@ const getPostByPostId = async (postId) => {
   return response.data
 }
 
-// Uodate user's post by postId
+// Update user's post by postId
 const updatePost = async (postData, token) => {
   const config = {
     headers: {

@@ -149,7 +149,10 @@ function Register() {
               accept='image/*'
               onChange={(e) => setImage(e.target.files[0])}
             />
-            <img src={imagePath} alt = '' className='author-image' />
+            {imagePath?
+              <img src={imagePath} alt = '' className='author-image' />
+              : null
+            }
           </div>
  
           <div className='form-group'>
