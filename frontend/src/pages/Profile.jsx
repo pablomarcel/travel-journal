@@ -22,7 +22,7 @@ const Profile = () => {
       .get('/api/users/me', config)
       .then(res => setCurrentUser(res.data))
       .catch(err => toast.error(err))
-  },[user]);
+  },[]);
 
   return (
     <Container style={{ width: "400px" }}>

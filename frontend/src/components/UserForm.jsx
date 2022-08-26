@@ -46,7 +46,7 @@ function UserForm() {
         })
       .catch(err => toast.error(err))
 
-  }, [user])
+  }, [])
 
   useEffect(() => {
     if (!image || image.length < 1) return;
