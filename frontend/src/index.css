@@ -257,6 +257,18 @@ h3 {
   object-fit: cover;
 }
 
+.sub-header {
+  display: flexbox;
+  width: 100%;
+}
+
+
+.form-icon {
+	font-size: 1.5rem;
+	cursor: pointer;
+  position: absolute;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

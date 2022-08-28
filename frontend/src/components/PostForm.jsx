@@ -5,9 +5,8 @@ import { Card, Container, Form, Button } from "react-bootstrap";
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-
-function PostForm({ postId, returnAddForm }) {
-  // const navigate = useNavigate()
+import { FiX } from 'react-icons/fi';
+function PostForm({ postId, togglePostForm, returnAddForm }) {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     title: '',
@@ -21,8 +20,7 @@ function PostForm({ postId, returnAddForm }) {
   });
 
   const [image, setImage] = useState('');
-  // const [imagePath, setImagePath] = useState('')
-  // const imageInputRef = useRef();
+  const [imagePath, setImagePath] = useState('')
 
   const {title, city, country, content, airBnBPrice, hotelPrice, couplePrice, familyPrice} = formData;
 
@@ -38,35 +36,36 @@ function PostForm({ postId, returnAddForm }) {
         hotelPrice: '',
         couplePrice: '',
         familyPrice: '',
-      })      
+      })
+      setImage('');     
       return
     }
     axios
       .get(`/api/posts/post/${postId}`)
-      .then(res => 
+      .then(res => {
+        setImage(res.data[0].image)
         setFormData({
           ...formData,
-          title: res.data.title,
-          city: res.data.city,
-          country: res.data.country,
-          content: res.data.content,
-          airBnBPrice: res.data.airBnBPrice,
-          hotelPrice: res.data.hotelPrice,
-          couplePrice: res.data.couplePrice,
-          familyPrice: res.data.familyPrice,
+          title: res.data[0].title,
+          city: res.data[0].city,
+          country: res.data[0].country,
+          content: res.data[0].content,
+          airBnBPrice: res.data[0].airBnBPrice,
+          hotelPrice: res.data[0].hotelPrice,
+          couplePrice: res.data[0].couplePrice,
+          familyPrice: res.data[0].familyPrice,
         })
-      .then(res => setImage(res.data.image))
-      )
+      })
       .catch(err => {
         toast.error(err)
       });
   }, [postId])
 
 
-  // useEffect(() => {
-  //   if (!image || image.length < 1) return;
-  //     // setImagePath(URL.createObjectURL(image))    
-  // }, [image]);
+  useEffect(() => {
+    if (!image || image.length < 1) return;
+    image instanceof Object ? setImagePath(URL.createObjectURL(image)) : setImagePath(`/${image}`)
+  }, [image]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -75,6 +74,7 @@ function PostForm({ postId, returnAddForm }) {
     }))
   }
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -120,8 +120,28 @@ function PostForm({ postId, returnAddForm }) {
   return (
     <Container>
       <div className="pb-2 box">
+        <div className='sub-header'>
+          <div onClick={()=>togglePostForm()} className='form-icon'>
+              <FiX />
+          </div>
+        </div>
         <h3 className="mb-2 title">{postId ? "Update Post" : "New Post"}</h3>
+
         <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Control
+              type="file"
+              accept='image/*'
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+          </Form.Group>
+          {image? (
+            <Form.Group controlId="formCard" className="mb-3">
+              <Card>
+                <Card.Img variant="top" src={imagePath} />
+              </Card>
+            </Form.Group>
+          ) : null}
           <Form.Group className="mb-3">
             <Form.Control
               type="text"
@@ -205,20 +225,6 @@ function PostForm({ postId, returnAddForm }) {
               onChange={onChange}
             />
           </Form.Group>
-          <Form.Group controlId="formFile" className="mb-3">
-            <Form.Control
-              type="file"
-              accept='image/*'
-              onChange={(e) => setImage(e.target.files[0])}
-            />
-          </Form.Group>
-          {image? (
-            <Form.Group controlId="formCard" className="mb-3">
-              <Card>
-                <Card.Img variant="top" src={`/${image}`} />
-              </Card>
-            </Form.Group>
-            ) : null}
  
           <div className="d-grid gap-2">
             <Button variant="primary" type="Submit">
@@ -234,6 +240,7 @@ function PostForm({ postId, returnAddForm }) {
 // Define props types for postId, returnAddForm
 PostForm.propTypes = {
   postId: PropTypes.string,
+  togglePostForm: PropTypes.func.isRequired,
   returnAddForm: PropTypes.func.isRequired
 }
 

@@ -19,9 +19,22 @@ const getAllMyFavoritePosts = asyncHandler(async (req, res) => {
         'from': 'posts', 
         'localField': 'post', 
         'foreignField': '_id', 
-        'as': 'post'
+        'as': 'post', 
+        'pipeline': [
+          {
+            '$lookup': {
+              'from': 'users', 
+              'localField': 'user', 
+              'foreignField': '_id', 
+              'as': 'author'
+            }
+          },
+          { "$unwind": "$author" }
+        ]
       }
-    }, {
+    },
+      { "$unwind": "$post" }
+    , {
       '$sort': {
         'updatedAt': -1
       }
@@ -36,7 +49,7 @@ const getAllMyFavoritePosts = asyncHandler(async (req, res) => {
 // @route   POST /api/myFavoritePosts
 // @access  Private
 const createMyFavoritePost = asyncHandler(async (req, res) => {
-  // // Check if postId and userId are valid or not
+  // Check if postId and userId are valid or not
   if (!req.user.id || !req.body.id) {
     res.status(400)
     throw new Error('User id and post id are required!')

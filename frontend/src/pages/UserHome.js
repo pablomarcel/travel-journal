@@ -42,7 +42,7 @@ const UserHome = () => {
     return <Spinner />
   }
 
-  const toggleAddPostForm = () => {
+  const togglePostForm = () => {
     setToggleDisplay(!toggleDisplay);
     if (toggleDisplay) {
       setPostId(null);
@@ -82,14 +82,16 @@ const UserHome = () => {
         {/* Post Form area */}
         <Col className={toggleDisplay ? 'show' : 'hide'}>
           {/* PostForm Component */}
-          <PostForm postId={postId} returnAddForm = {returnAddForm} />
+          {/* <PostForm postId={postId} returnAddForm = {returnAddForm} /> */}
+          <PostForm postId={postId} togglePostForm = {togglePostForm} returnAddForm = {returnAddForm}/>
         </Col>
         {/* User's Post-List area */}
         <Col>
           <h3 className='title'>My Post-List</h3>
-          <Button variant="outline-primary" onClick={()=> toggleAddPostForm()}>
-            {toggleDisplay? "Close Add New Post Form" : "Add New Post"}
-          </Button>
+          {!toggleDisplay?
+            <Button variant="outline-primary" onClick={()=> togglePostForm()}>
+              Add New Post
+            </Button> : ''}
           {posts.length > 0 ? (
             <>
               {posts.map((post, idx) => 

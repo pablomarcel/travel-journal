@@ -50,9 +50,10 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 // Update user
 export const updateUser = createAsyncThunk(
   'auth/updateUser',
-  async (id, thunkAPI) => {
+  async (userData, thunkAPI) => {
     try {
-      return await authService.updateUser(id)
+      const token = thunkAPI.getState().auth.user.token
+      return await authService.updateUser(userData, token)
     } catch (error) {
       const message =
         (error.response &&
@@ -185,7 +186,6 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.isError = true
         state.message = action.payload
-        // state.user = null
       })
   },
 })

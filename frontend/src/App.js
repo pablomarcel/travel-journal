@@ -10,32 +10,8 @@ import UserHome from "./pages/UserHome";
 import PostDetail from "./pages/PostDetail";
 import FavoritePost from "./pages/FavoritePost";
 import Profile from "./pages/Profile";
-// import { useEffect } from 'react'
-// import { useSelector, useDispatch } from 'react-redux'
-// import Spinner from './components/Spinner'
-// import { getAllPosts, reset } from './features/posts/postSlice'
+import UserForm from './components/UserForm';
 function App() {
-
-  // const dispatch = useDispatch()
-
-  // const { posts, isLoading, isError, message } = useSelector((state) => state.posts)
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     console.log(message)
-  //   }
-
-  //   dispatch(getAllPosts())
-
-  //   return () => {
-  //     dispatch(reset())
-  //   }
-  // }, [isError, message, dispatch])
-
-  // if (isLoading) {
-  //   return <Spinner />
-  // }
-
   return (
     <>
       <Router>
@@ -48,6 +24,7 @@ function App() {
           <Route path="/favoritePost" element={<FavoritePost />} />
           <Route path="/postDetail/:id" element={<PostDetail />} />
           <Route path="/profile/:userId" element={<Profile />} />
+          <Route path="/userForm" element={<UserForm />} />
         </Routes>
         <Footer />
       </Router>

@@ -1,10 +1,10 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const API_URL = 'api/users/'
+const API_URL = 'api/users/';
 
 // Register user
 const register = async (userData) => {
-  const response = await axios.post(API_URL, userData, {
+  const response = await axios.post(API_URL + 'register', userData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -34,15 +34,18 @@ const logout = () => {
 }
 
 // Update user data by userId
-const updateUser = async (userId) => {
+const updateUser = async (userData, token) => {
   const config = {
     headers: {
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'multipart/form-data',
     },
   }
-
-  const response = await axios.put(API_URL + userId, config)
-
+  const userId = userData.userId;
+  const response = await axios.put(API_URL + userId, userData, config)
+  if (response.data) {
+    localStorage.setItem('user', JSON.stringify(response.data))
+  }
   return response.data
 }
 
