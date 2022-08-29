@@ -10,7 +10,7 @@ const connectDB = require('./config/db');
 connectDB();
 
 const server = express();
-server.get("/") //delete if it does not work
+// server.get("/") //delete if it does not work
 server.use(express.json());
 server.use(cors({origin: true}));
 // const corsOptions = {
