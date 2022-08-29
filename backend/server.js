@@ -38,7 +38,8 @@ server.use('/', express.static('../frontend/build'))
 server.get('*', (req, res) => {
 
     //res.sendFile(path.join(__dirname + './frontend/build/index.html'));
-    res.sendFile('../frontend/build/index.html');
+    //res.sendFile('../frontend/build/index.html');
+    res.sendFile('index.html', {root: '..'});
 });
 
 
