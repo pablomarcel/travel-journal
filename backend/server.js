@@ -39,7 +39,7 @@ server.get('*', (req, res) => {
 
     //res.sendFile(path.join(__dirname + './frontend/build/index.html'));
     //res.sendFile('../frontend/build/index.html');
-    res.sendFile('index.html', {root: '..'});
+    res.sendFile('index.html', {root: '../frontend/build'});
 });
 
 
