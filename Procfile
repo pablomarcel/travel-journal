@@ -1,3 +1,3 @@
-web: npm start && npm start --prefix frontend
+web: node index.js
 
 
