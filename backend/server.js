@@ -28,12 +28,13 @@ server.use(express.urlencoded({ extended: true }));
 server.use(errorHandler);
 server.use(routes);
 //server.use('/', express.static(path.join(__dirname, '/frontend/build')))
-server.use('/', express.static('../frontend/build'))
-server.get('*', (req, res) => {
-    console.log(__dirname)
-    //res.sendFile(path.join(__dirname + './frontend/build/index.html'));
-    res.sendFile('../frontend/build/index.html');
-});
+//server.use('/', express.static('../frontend/build'))
+console.log(__dirname)
+// server.get('*', (req, res) => {
+//     console.log(__dirname)
+//     //res.sendFile(path.join(__dirname + './frontend/build/index.html'));
+//     res.sendFile('../frontend/build/index.html');
+// });
 server.use('/images', express.static('images'));
 
 module.exports = server;
