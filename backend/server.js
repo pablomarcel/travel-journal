@@ -30,8 +30,7 @@ server.use(routes);
 server.use('/images', express.static('images'));
 //server.use('/', express.static(path.join(__dirname, '/frontend/build')))
 
-console.log(`dir name is: ${__dirname}`)
-console.log(`dir base name is: ${path.basename(path.dirname('server.js'))}`)
+console.log(`base dir: ${require('path').resolve(__dirname, '..')}`)
 
 server.use('/', express.static('../frontend/build'))
 
@@ -39,7 +38,11 @@ server.get('*', (req, res) => {
 
     //res.sendFile(path.join(__dirname + './frontend/build/index.html'));
     //res.sendFile('../frontend/build/index.html');
-    res.sendFile('index.html', {root: '../frontend/build'});
+    //res.sendFile('index.html', {root: '../frontend/build'});
+
+    res.sendFile(path.join(require('path').resolve(__dirname, '..') + '/frontend/build/index.html'));
+
+
 });
 
 
