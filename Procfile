@@ -1,3 +1,3 @@
-worker:node backend/index.js
+web: npm start && npm start --prefix frontend
 
 
