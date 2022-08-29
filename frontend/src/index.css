@@ -4,7 +4,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
 }
 
 h3 {
@@ -26,8 +25,8 @@ h3 {
   height: 40px !important;
   line-height: 40px !important;
   font-size: 15px !important;
-  /* margin: 10px; */
 }
+
 .g-btn > div,
 .g-btn > div > svg {
   width: 40px !important;
@@ -145,28 +144,6 @@ h3 {
   color: #828282;
 }
 
-/* .goals {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.goal {
-  background-color: #f4f4f4;
-  margin: 10px 0;
-  padding: 20px 0 10px;
-  position: relative;
-}
-
-.goal .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  cursor: pointer;
-  border: none;
-  background: none;
-} */
-
 .form,
 .content {
   width: 70%;
@@ -262,11 +239,44 @@ h3 {
   width: 100%;
 }
 
-
 .form-icon {
 	font-size: 1.5rem;
 	cursor: pointer;
   position: absolute;
+}
+
+.sub-card {
+  display: flex;
+  height: 30px;
+  width: 100%;
+}
+
+.sub-text {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.author-small-image {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
+
+.comment {
+  background-color: #f4f4f4;
+  margin: 10px 0;
+  padding: 10px 0 10px;
+  position: relative;
+}
+
+.comment .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  border: none;
+  background: none;
 }
 
 @keyframes spin {

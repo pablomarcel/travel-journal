@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'
 import { FaUser } from 'react-icons/fa'
 import { register, reset } from '../features/auth/authSlice'
@@ -19,7 +19,6 @@ function Register() {
 
   const [image, setImage] = useState('')
   const [imagePath, setImagePath] = useState('')
-  // const imageInputRef = useRef();
 
   const { firstName, lastName, email, password, password2 } = formData
 

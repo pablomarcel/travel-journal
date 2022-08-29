@@ -47,13 +47,13 @@ function PostForm({ postId, togglePostForm, returnAddForm }) {
         setFormData({
           ...formData,
           title: res.data[0].title,
-          city: res.data[0].city,
-          country: res.data[0].country,
-          content: res.data[0].content,
-          airBnBPrice: res.data[0].airBnBPrice,
-          hotelPrice: res.data[0].hotelPrice,
-          couplePrice: res.data[0].couplePrice,
-          familyPrice: res.data[0].familyPrice,
+          city: res.data[0].city? res.data[0].city : '',
+          country: res.data[0].country? res.data[0].country : '',
+          content: res.data[0].content? res.data[0].content : '',
+          airBnBPrice: res.data[0].airBnBPrice? res.data[0].airBnBPrice : '',
+          hotelPrice: res.data[0].hotelPrice? res.data[0].hotelPrice : '',
+          couplePrice: res.data[0].couplePrice? res.data[0].couplePrice : '',
+          familyPrice: res.data[0].familyPrice? res.data[0].familyPrice : '',
         })
       })
       .catch(err => {

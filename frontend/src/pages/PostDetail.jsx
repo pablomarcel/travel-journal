@@ -5,12 +5,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { toast } from "react-toastify";
 import formatDistance from 'date-fns/formatDistance';
-// import PropTypes from 'prop-types';
+import CommentList from "../components/CommentList";
+import CommentForm from "../components/CommentForm";
 
 const PostDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState({});
+  const [comments, setComments] = useState({});
+  const [toggleForm, setToggleForm] = useState(false);
   const { user } = useSelector((state) => state.auth);
   
   useEffect(() => {
@@ -21,20 +24,40 @@ const PostDetail = () => {
       .catch(err => {
         toast.error(err)
       });
+
+    axios
+      .get(`/api/comments/post/${id}`)
+      .then(res => {
+        setComments(res.data)
+      })
+      .catch(err => toast.error(err));
   }, [id]);
+
+  const toggleCommentForm = () => {
+    setToggleForm(!toggleForm);
+  };
+
+  const refreshCommentData = async() => {
+    await axios
+      .get(`/api/comments/post/${id}`)
+      .then(res => {
+        setComments(res.data)
+      })
+      .catch(err => toast.error(err));
+  }
 
   const addMyFavoritePost = async () => {
     if (!id || !user) {
       toast.error('Post Id and user id are required');
     } else {
-      const data = {id, user};
+      const data = {id};
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      axios
-        .post('/api/myFavoritePosts/', data, config)
+      await axios
+        .post('/api/favoriteposts/', data, config)
         .then(res => {
           toast.success('The task has been done. Please visit your favorire posts page.');
           return res.data
@@ -76,24 +99,40 @@ const PostDetail = () => {
           <Card.Text>
             Price for a round trip: * Couple: {post.couplePrice} - * Family: {post.familyPrice}
           </Card.Text>
+          {user && !toggleForm ?
+            (<div className="mb-2">
+              <Button variant="outline-primary" type="submit" onClick={()=> toggleCommentForm()}>
+                Add New Comment
+              </Button>
+
+            </div>)
+            : ''
+          }
+          <div className={toggleForm? 'show' : 'hide'}>
+            <Card.Body>
+              <CommentForm postId={id} user={user} toggleCommentForm={toggleCommentForm} refreshCommentData = {refreshCommentData} />
+            </Card.Body>
+          </div>
+
+          <Card className='mb-2'>
+            <Card.Body>
+              {comments && comments.length > 0 ? <CommentList comments = {comments} refreshCommentData = {refreshCommentData} /> : null}
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
+
       <Button variant="outline-primary" type="submit" onClick={()=> navigate('/')}>
         Back to Home Page
       </Button>{"  "}
-      {user ? (
+      {user ?
         <Button variant="outline-primary" type="submit" onClick={addMyFavoritePost}>
           Add to My Favorite Posts
         </Button>
-        ) : ('')
+        : ''
       }
-
     </Container>
   )
 }
-
-// PostDetail.propTypes = {
-//   userMode: PropTypes.bool.isRequired
-// }
 
 export default PostDetail
