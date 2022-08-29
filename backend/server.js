@@ -15,7 +15,7 @@ const server = express();
 // server.get("/") //delete if it does not work
 server.use(express.json());
 // server.use(cors({origin: true}));
-server.use(cors());
+server.use(cors({origin: false}));
 // const corsOptions = {
 //     origin: "http://localhost:3000"
 // }
@@ -32,7 +32,9 @@ server.use('/images', express.static('images'));
 
 console.log(`base dir: ${require('path').resolve(__dirname, '..')}`)
 
-server.use('/', express.static('../frontend/build'))
+//server.use('/', express.static('../frontend/build'))
+
+server.use('/', express.static(path.join(require('path').resolve(__dirname, '..'), '/frontend/build')))
 
 server.get('*', (req, res) => {
 
