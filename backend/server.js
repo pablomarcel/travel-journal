@@ -27,14 +27,19 @@ server.use(cors());
 server.use(express.urlencoded({ extended: true }));
 server.use(errorHandler);
 server.use(routes);
-//server.use('/', express.static(path.join(__dirname, '/frontend/build')))
-//server.use('/', express.static('../frontend/build'))
-console.log(__dirname)
-// server.get('*', (req, res) => {
-//     console.log(__dirname)
-//     //res.sendFile(path.join(__dirname + './frontend/build/index.html'));
-//     res.sendFile('../frontend/build/index.html');
-// });
 server.use('/images', express.static('images'));
+//server.use('/', express.static(path.join(__dirname, '/frontend/build')))
+
+console.log(`dir name is: ${__dirname}`)
+console.log(`dir base name is: ${path.basename(path.dirname('server.js'))}`)
+
+server.use('/', express.static('../frontend/build'))
+
+server.get('*', (req, res) => {
+
+    //res.sendFile(path.join(__dirname + './frontend/build/index.html'));
+    res.sendFile('../frontend/build/index.html');
+});
+
 
 module.exports = server;
