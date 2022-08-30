@@ -113,8 +113,11 @@ My Favorite Posts: display all the user's favorite posts
 ## Developing This API
 
 Make sure you have version 14 or 16 of Node.js installed on your computer.
-In your terminal, from inside this project directory, run npm install to install the project dependencies.
-You may also need to change the directory/folder to 'frontend', and run npm install to install additional project dependencies.
+
+In your terminal, from inside this project directory, run `npm install` to install the project dependencies.
+
+You may also need to change the directory/folder to 'frontend', and run `npm install` to install additional project dependencies.
+
 Create a .env file in the root project directory with the following code: 
 ```
 NODE_ENV = development
