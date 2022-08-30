@@ -4,8 +4,8 @@ const colors = require('colors');
 const routes = require("./routes");
 const dotenv = require('dotenv').config();
 const { errorHandler } = require('./middleware/errorMiddleware');
-const { getFileStream } = require('./middleware/fileUpload');
 const connectDB = require('./config/db');
+
 
 connectDB();
 
@@ -15,6 +15,7 @@ server.use(express.urlencoded({ extended: true }));
 server.use(errorHandler);
 server.use(routes);
 server.use('/images', express.static('images'));
+
 
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
@@ -30,3 +31,4 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = server;
+

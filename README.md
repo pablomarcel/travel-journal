@@ -3,16 +3,16 @@ Guide for travelers around the world.
 
 # Problem Statement (Owner: Product)
 # Scope:
-Travel is unpredictable. While millions ol travelers everyday can't forsee the future, our travel application helps every type of traveler find an unforgettable experience of their own, curated by fellow users. 
+We travel to make us happy. Therefore, it is important for millions of travelers to be able to find an unforgettable experience without inconveniences. 
 
 # Impact: 
-Your travel expectations can differ from reality. Always find your true experience before you make the trip. 
+Currently, travellers need to search though multiple sites to find the latest updates or travel tips. There is no "go-to" site or application for the travel community for reviewing recent user trips. If this information is lacking, travellers can find themselves in a predicament when they arrive at their destination. 
 
 # Causes: 
-Want to find the most popular stops where you're going? Trying to avoid crowded peak times when travelling? Great service? Or maybe you want to find local secrets and hidden gems. Follow experienced travellers and their advice where ever you're going. 
+When travellers are spending time fixing their travel problems, they are not spending time enjoying their trip. Consequently, the traveller will feel that they have wasted their time and money. 
 
 # Other solutions: 
-Other travel sites such as Expedia and KAYAK provides travel booking. Review sites such as Yelp and Tripadvisor offers community driven reviews and forums for travel. Our application provides a more positive and personal approach to community travel sharing by offering users the ability to share, comment, and review each other's trips. 
+Through our application, travellers have a platform to share their experiences. Prospective travellers can then plan their trips in advance to avoid any inconveniences by using the shared content, comments, and reviews of other user's trips.
 
 # Design a Solution (Owner: Database & Frontend)
 ![travel-journal.png](travel-journal.png)
