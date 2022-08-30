@@ -95,7 +95,7 @@ Home page: display all posts with comments and rating for each post and searchin
 Login page;
 Register page;
 Update user page;
-My Posts: display all posts of loggedin user;
+My Posts: display all posts of logged-in user;
 My Favorite Posts: display all the user's favorite posts
 
 
@@ -104,7 +104,11 @@ My Favorite Posts: display all the user's favorite posts
 
 ![img.png](assets/img.png)
 
+# Documentation
 
+## Travel Journal URL, API and Frontend
+
+[**LINK: Travel Journal URL**](https://travel-journal-pablo.herokuapp.com/)
 
 ## Developing This API
 
@@ -115,13 +119,13 @@ Create a .env file in the root project directory with the following code:
 ```
 NODE_ENV = development
 
-PORT = 5000
+PORT = 8000
 
 MONGO_URI = "mongodb+srv://<admin>:<password>@<cluster>.mongodb.net/travel_journal?retryWrites=true&w=majority"
 
 JWT_SECRET = c-team2022
 ```
-Run npm run dev to start the local server. You should see a logged statement telling you Server is listening on http://localhost:5000.
+Run npm run dev to start the local server. You should see a logged statement telling you Server is listening on http://localhost:8000.
 Use curl or API client of your choice to browse the various endpoints contained in this project. 
 
 
@@ -155,7 +159,7 @@ PUT /userModel/:id
 
 Path id parameter is a hexadecimal id. Responses for failures will include a field of error.
 
-Example good request: `curl http://localhost:5000/api/comments/post/6304549cae0ccea9638cad1e`
+Example good request: `curl http://localhost:8000/api/comments/post/6304549cae0ccea9638cad1e`
 
 Example response: ```[]```
 
@@ -166,11 +170,11 @@ Example bad response: `{error: 'No comment found with the post id 6304549cae0cce
 
 Responses for failures will include a field of error.
 
-Example good request: `curl -X POST -H "Content-Type: application/json" -d '{"userId":"63019debd198b257dfd0088b", "postId":"63019debd198b257dfd00ee4"}' http://localhost:5000/api/comments`
+Example good request: `curl -X POST -H "Content-Type: application/json" -d '{"userId":"63019debd198b257dfd0088b", "postId":"63019debd198b257dfd00ee4"}' http://localhost:8000/api/comments`
 
 Example response: ```[]```
 
-Example bad request: `curl -X POST -H "Content-Type: application/json" -d '{"userId":"63019debd198b257dfd0088b"}' http://localhost:5000/api/comments`
+Example bad request: `curl -X POST -H "Content-Type: application/json" -d '{"userId":"63019debd198b257dfd0088b"}' http://localhost:8000/api/comments`
 
 Example bad response: `{error: 'User id, post Id and comment are required.'}`
 
@@ -181,7 +185,7 @@ Example failure response: `{error: 'Invalid comment data'}`
 
 Responses for failures will include a field of error.
 
-Example good request: `curl -X DELETE http://localhost:5000/api/comments/6304549cae0ccea9638cad1e`
+Example good request: `curl -X DELETE http://localhost:8000/api/comments/6304549cae0ccea9638cad1e`
 
 Example response: ```[]```
 
@@ -192,7 +196,7 @@ Example failure response: `{error: 'Comment not found.'}`
 
 Responses for failures will include a field of error.
 
-Example good request: `curl http://localhost:5000/api/comments/post/6304549cae0ccea9638cad1e`
+Example good request: `curl http://localhost:8000/api/comments/post/6304549cae0ccea9638cad1e`
 
 Example response: ```[]```
 
@@ -203,13 +207,13 @@ Example bad response: `{error: 'No favorite found with the user id 63019debd198b
 
 Responses for failures will include a field of error.
 
-Example good request: `curl -X POST -H "Content-Type: application/json" -d '{"userId":"63019debd198b257dfd0088b", "postId":"63019debd198b257dfd00ee4"}' http://localhost:5000/api/comments`
+Example good request: `curl -X POST -H "Content-Type: application/json" -d '{"userId":"63019debd198b257dfd0088b", "postId":"63019debd198b257dfd00ee4"}' http://localhost:8000/api/comments`
 
 Example response: ```[]```
 
 Example response if post already exists with the same userId and postId: `{error: 'The post already exists in your favorite post collection.'}`
 
-Example bad request: `curl -X POST -H "Content-Type: application/json" -d '{"userId":"63019debd198b257dfd0088b"}' http://localhost:5000/api/comments`
+Example bad request: `curl -X POST -H "Content-Type: application/json" -d '{"userId":"63019debd198b257dfd0088b"}' http://localhost:8000/api/comments`
 
 Example bad response: `{error: 'User id and post id are required!'}`
 
@@ -220,7 +224,7 @@ Example failure response: `{error: 'Invalid my favorite post data.'}`
 
 Responses for failures will include a field of error.
 
-Example good request: `curl -X DELETE http://localhost:5000/api/comments/6304549cae0ccea9638cad1e`
+Example good request: `curl -X DELETE http://localhost:8000/api/comments/6304549cae0ccea9638cad1e`
 
 Example response: ```[]```
 
@@ -231,7 +235,7 @@ Example failure response: `{error: 'My favorite post not found.'}`
 
 Responses for failures will include a field of error.
 
-Example good request: `curl http://localhost:5000/api/posts`
+Example good request: `curl http://localhost:8000/api/posts`
 
 Example response: ```[]```
 
@@ -242,7 +246,7 @@ Example bad response: `{error: "Something went wrong. Please try again."}`
 
 Responses for failures will include a field of error.
 
-Example good request: `curl http://localhost:5000/api/posts/post/63019debd198b257dfd0088b`
+Example good request: `curl http://localhost:8000/api/posts/post/63019debd198b257dfd0088b`
 
 Example response: ```[]```
 
@@ -253,7 +257,7 @@ Example bad response: `{error: 'No post found with id 63019debd198b257dfd0088b.'
 
 Responses for failures will include a field of error.
 
-Example good request: `curl http://localhost:5000/api/posts/user`
+Example good request: `curl http://localhost:8000/api/posts/user`
 
 Example response: ```[]```
 
@@ -264,11 +268,11 @@ Example bad response: `{error: 'No post found with the user id 63019debd198b257d
 
 Responses for failures will include a field of error.
 
-Example good request: `curl -X POST -H "Content-Type: multipart/form-data" -d '{"title":"test title", "content":"test content", "city":"Seattle","country":"USA"}' http://localhost:5000/api/posts`
+Example good request: `curl -X POST -H "Content-Type: multipart/form-data" -d '{"title":"test title", "content":"test content", "city":"Seattle","country":"USA"}' http://localhost:8000/api/posts`
 
 Example response: ```[]```
 
-Example bad request: `curl -X POST -H "Content-Type: multipart/form-data" -d '{"title":"test title"}' http://localhost:5000/api/posts`
+Example bad request: `curl -X POST -H "Content-Type: multipart/form-data" -d '{"title":"test title"}' http://localhost:8000/api/posts`
 
 Example bad response: `{error: 'Title and content are required!'}`
 
@@ -279,7 +283,7 @@ Example failure response: `{error: 'Invalid post data'}`
 
 Responses for failures will include a field of error.
 
-Example good request: `curl -X PUT -H "Content-Type: multipart/form-data" -d '{"title":"test", "content":"test content", "city":"test city","country":"USA"}' http://localhost:5000/api/posts/63019debd198b257dfd0088b`
+Example good request: `curl -X PUT -H "Content-Type: multipart/form-data" -d '{"title":"test", "content":"test content", "city":"test city","country":"USA"}' http://localhost:8000/api/posts/63019debd198b257dfd0088b`
 
 Example response: ```[]```
 
@@ -298,7 +302,7 @@ Example failure response: `{error: "Something went wrong. Please try again."}`
 
 Responses for failures will include a field of error.
 
-Example good request: `curl -X DELETE http://localhost:5000/api/posts/63019debd198b257dfd0088b`
+Example good request: `curl -X DELETE http://localhost:8000/api/posts/63019debd198b257dfd0088b`
 
 Example response: ```[]```
 
@@ -315,7 +319,7 @@ Example bad response if image could not be replaced/does not exist: `{error: 'Im
 
 Responses for failures will include a field of error.
 
-Example good request: `curl http://localhost:5000/api/users/me`
+Example good request: `curl http://localhost:8000/api/users/me`
 
 Example response: ```[]```
 
@@ -324,7 +328,7 @@ Example response: ```[]```
 
 Responses for failures will include a field of error.
 
-Example good request: `curl -X POST -H "Content-Type: application/json" -d '{"email":"test@uw.edu", "password":"secrets!"}' http://localhost:5000/api/users/login`
+Example good request: `curl -X POST -H "Content-Type: application/json" -d '{"email":"test@uw.edu", "password":"secrets!"}' http://localhost:8000/api/users/login`
 
 Example response: ```[]```
 
@@ -339,11 +343,11 @@ Example bad response if password is incorrect: `{error: "Password is incorrect!"
 
 Responses for failures will include a field of error.
 
-Example good request: `curl -X POST -H "Content-Type: multipart/form-data" -d '{"firstName":"test", "lastName":"lo", "email":"test@uw.edu","password":"secrets!"}' http://localhost:5000/api/users/register`
+Example good request: `curl -X POST -H "Content-Type: multipart/form-data" -d '{"firstName":"test", "lastName":"lo", "email":"test@uw.edu","password":"secrets!"}' http://localhost:8000/api/users/register`
 
 Example response: ```[]```
 
-Example bad request: `curl -X POST -H "Content-Type: multipart/form-data" -d '{"firstName":"test", "lastName":"lo"}' http://localhost:5000/api/users/register`
+Example bad request: `curl -X POST -H "Content-Type: multipart/form-data" -d '{"firstName":"test", "lastName":"lo"}' http://localhost:8000/api/users/register`
 
 Example bad response: `{error: "Users must have a name, password, and email."}`
 
@@ -356,7 +360,7 @@ Example failure response: `{error:'Invalid user data'}`
 
 Responses for failures will include a field of error.
 
-Example good request: `curl -X PUT -H "Content-Type: multipart/form-data" -d '{"firstName":"test", "lastName":"lo", "email":"test@uw.edu","password":"secrets!"}' http://localhost:5000/api/users/573a13a3f29313caabd0e77b`
+Example good request: `curl -X PUT -H "Content-Type: multipart/form-data" -d '{"firstName":"test", "lastName":"lo", "email":"test@uw.edu","password":"secrets!"}' http://localhost:8000/api/users/573a13a3f29313caabd0e77b`
 
 Example response: ```[]```
 
