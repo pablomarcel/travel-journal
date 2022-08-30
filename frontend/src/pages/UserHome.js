@@ -82,7 +82,6 @@ const UserHome = () => {
         {/* Post Form area */}
         <Col className={toggleDisplay ? 'show' : 'hide'}>
           {/* PostForm Component */}
-          {/* <PostForm postId={postId} returnAddForm = {returnAddForm} /> */}
           <PostForm postId={postId} togglePostForm = {togglePostForm} returnAddForm = {returnAddForm}/>
         </Col>
         {/* User's Post-List area */}

@@ -29,7 +29,7 @@ const Post = ({ post, showUsername, fromFavoritePostPage }) => {
           <Card.Title>{title}</Card.Title>
         </Link>
         <Card.Text>
-          {postDate} 
+          {postDate}
           {author}
         </Card.Text>
       </Card.Body>
