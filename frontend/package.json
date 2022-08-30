@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "proxy": "https://travel-journal2022.herokuapp.com:5000/",
+  "proxy": "https://travel-journal-pablo.herokuapp.com:8000/",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.4",
