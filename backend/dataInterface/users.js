@@ -43,7 +43,7 @@ module.exports.findByCredentials = asyncHandler(async (userObj) => {
 
 // Create a new user
 module.exports.create = asyncHandler(async (newObj) => {
-  const { firstName, lastName, email, password, path } = newObj;
+  const { firstName, lastName, email, password, location } = newObj;
   // validate that the user doesn't already exist in the database
   let alreadyExists = await findByEmail(email)
   if(alreadyExists){return {error:"This email is already in use"}}
@@ -62,7 +62,7 @@ module.exports.create = asyncHandler(async (newObj) => {
     lastName,
     email,
     password: hashedPassword,
-    image: path
+    image: location
   })
 
   if (user) {
@@ -81,7 +81,7 @@ module.exports.create = asyncHandler(async (newObj) => {
 
 module.exports.updateUser = asyncHandler( async (userId, newObj) => {
   // Get updated user info from newObj
-  const { email, password, oldPassword, path } = newObj;
+  const { email, password, oldPassword, location } = newObj;
   // Get old user data by userid
   const oldUser = await User.findById(userId);
 
@@ -98,7 +98,7 @@ module.exports.updateUser = asyncHandler( async (userId, newObj) => {
 
   // Delete the old image if it doesnot match the new one in images folder
   if (oldUser.image) {
-    if (path && path !== oldUser.image) {
+    if (location && location !== oldUser.image) {
       fs.unlink(oldUser.image, (err) => {
         if (err) return {error: 'Image not found!'};
         // if no error, file has been deleted successfully
@@ -115,9 +115,9 @@ module.exports.updateUser = asyncHandler( async (userId, newObj) => {
   } else {
     newObj.password = oldUser.password;
   }
-  // Update new image path for user's body data
-  if (path) {
-    newObj.image = path;
+  // Update new image location for user's body data
+  if (location) {
+    newObj.image = location;
   }
   // Update user data to database
   const updatedUser = await User.findByIdAndUpdate(userId, newObj, {

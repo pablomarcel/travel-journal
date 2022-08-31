@@ -10,7 +10,6 @@ const userData = require('../dataInterface/users');
 
 // curl -X POST -H "Content-Type: application/json" -d '{"email":"test@uw.edu", "password":"secrets!"}' http://localhost:5000/api/users/login
 router.post("/login", asyncHandler(async (req, res, next) => {
-
   let result = await userData.findByCredentials(req.body)
 
   if(result.error){
@@ -49,7 +48,6 @@ router.put("/:id", protect, upload.single('image'), asyncHandler( async (req, re
     }
   }
 }));
-
 
 // curl http://localhost:5000/api/users/me
 router.get('/me', protect, asyncHandler(async (req, res, next) => {
