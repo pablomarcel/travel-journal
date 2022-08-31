@@ -77,7 +77,7 @@ const PostDetail = () => {
       <Row>
         <Col>
           <Card className='mb-2'>
-            {post.image ? <Card.Img src = {`/${post.image}`} alt={post.title} /> : ''}
+            {post.image ? <Card.Img src = {post.image} alt={post.title} /> : ''}
             <Card.Body>
               <Card.Text>
                 {post.updatedAt? `Last modified: ${formatDistance(new Date(post.updatedAt), new Date())}`:''}
