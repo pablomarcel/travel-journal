@@ -156,3 +156,29 @@ module.exports.deletePost = asyncHandler(async (postId, userId) => {
 
   return { id: postId }
 })
+
+// Search posts by post's title
+module.exports.searchPostsByTitle = asyncHandler(async(search) => {
+  const pipeline = [
+    {
+      '$search': {
+        'index': 'title_autocomplete', 
+        'autocomplete': {
+          'query': search, // search content
+          'path': 'title',
+        }
+      }
+    }, {
+      '$limit': 5
+    }, {
+      '$project': {
+        '_id': 1, 
+        'title': 1, 
+        'content': 1, 
+        'updatedAt': 1,
+      }
+    }
+  ];
+  let posts = await Post.aggregate(pipeline);
+  return posts;
+})
