@@ -37,44 +37,44 @@ describe("/comments routes", () => {
   
 
   
-    describe("POST /comments", () =>{
-      it("should return the new comment on success", async () => {
-          commentData.createComment.mockResolvedValue({user:"6311118ac74bde475d900ddc", postId:"631111a8c74bde475d900de9"});
+  //   describe("POST /comments", () =>{
+  //     it("should return the new comment on success", async () => {
+  //         commentData.createComment.mockResolvedValue({user:"6311118ac74bde475d900ddc", postId:"631111a8c74bde475d900de9"});
   
-          const res = await request(server).post("/api/comments")
+  //         const res = await request(server).post("/api/comments")
   
-          expect(res.statusCode).toEqual(200);
-          expect(Object.isObject(res.body)).toEqual(true);
-          expect(res.body.error).not.toBeDefined();
+  //         expect(res.statusCode).toEqual(200);
+  //         expect(Object.isObject(res.body)).toEqual(true);
+  //         expect(res.body.error).not.toBeDefined();
           
   
-        //check status code == 200
-      });
+  //       //check status code == 200
+  //     });
   
-      it("should return an error message if comment fails to be created", async () => {
-          commentData.createComment.mockResolvedValue(null);
-          const res = await request(server).post("/api/comments")
+  //     it("should return an error message if comment fails to be created", async () => {
+  //         commentData.createComment.mockResolvedValue(null);
+  //         const res = await request(server).post("/api/comments")
   
-          expect(res.body.error).toBeDefined();
-          expect(res.statusCode).toEqual(400);
-      });
-  });
-  describe("DELETE /comments/:id", () =>{
-    it("should return id of deleted comment on success", async () => {
-      commentData.deleteComment.mockResolvedValue({id: '631128bbe08491e28587f13f'
-      })
-      const res = await request(server).delete("/api/comments/:id")
-      expect(res.statusCode).toEqual(200);
-      expect(Object.isObject(res.body)).toEqual(true);
+  //         expect(res.body.error).toBeDefined();
+  //         expect(res.statusCode).toEqual(400);
+  //     });
+  // });
+  // describe("DELETE /comments/:id", () =>{
+  //   it("should return id of deleted comment on success", async () => {
+  //     commentData.deleteComment.mockResolvedValue({id: '631128bbe08491e28587f13f'
+  //     })
+  //     const res = await request(server).delete("/api/comments/:id")
+  //     expect(res.statusCode).toEqual(200);
+  //     expect(Object.isObject(res.body)).toEqual(true);
 
-      // check status code 200
-    });
-    it("should return an error message if comment fails to be deleted", async () => {
-      commentData.deleteComment.mockResolvedValue({error: `sample error.`})
-      const res = await request(server).delete("/api/comments/:id")
-      expect(res.statusCode).toEqual(400);
-    });
-  });
+  //     // check status code 200
+  //   });
+  //   it("should return an error message if comment fails to be deleted", async () => {
+  //     commentData.deleteComment.mockResolvedValue({error: `sample error.`})
+  //     const res = await request(server).delete("/api/comments/:id")
+  //     expect(res.statusCode).toEqual(400);
+  //   });
+  // });
   });
   
 
