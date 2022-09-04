@@ -2,21 +2,35 @@ import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import formatDistance from 'date-fns/formatDistance';
+import default_image from '../logo/default_user.jpg';
 const Post = ({ post, showUsername, fromFavoritePostPage }) => {
   if (!post) {return}
-  // Get the post author name
-  const author = showUsername ? 
-                  (fromFavoritePostPage ?
-                    post.post? ` - Author: ${post.post.author.firstName} ${post.post.author.lastName}`:''
-                    : 
-                    post.author? ` - Author: ${post.author.firstName} ${post.author.lastName}`:'')
-                  :'';
+  // Get author image & name
+  let authorImage = '';
+  let author = '';
 
+  if (showUsername) {
+    authorImage = fromFavoritePostPage ?
+                    post.post?
+                      <img src={post.post.author.image} alt = '' className='author-small-image' />
+                      :
+                      <img src={default_image} alt = '' className='author-small-image' />
+                    :
+                    post.author?
+                    <img src={post.author.image} alt = '' className='author-small-image' />
+                      :
+                      <img src={default_image} alt = '' className='author-small-image' />;
+    author = fromFavoritePostPage ?
+              post.post? ` ${post.post.author.firstName} ${post.post.author.lastName} - `:''
+              : 
+              post.author? ` ${post.author.firstName} ${post.author.lastName} - `:'';
+  }
+  
   const postId = fromFavoritePostPage ? post.post._id : post._id;
   const title = fromFavoritePostPage ? post.post.title : post.title;
   const image = fromFavoritePostPage ? post.post.image : post.image;
   
-  const postDate = post.updatedAt ? `Last modified: ${formatDistance(new Date(post.updatedAt), new Date())}` : '';
+  const postDate = post.updatedAt ? ` Last modified: ${formatDistance(new Date(post.updatedAt), new Date())}` : '';
   
   return (
     <Card className='mb-2'>
@@ -29,8 +43,9 @@ const Post = ({ post, showUsername, fromFavoritePostPage }) => {
           <Card.Title>{title}</Card.Title>
         </Link>
         <Card.Text>
-          {postDate}
+          {authorImage}
           {author}
+          {postDate}
         </Card.Text>
       </Card.Body>
     </Card>

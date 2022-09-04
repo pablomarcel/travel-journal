@@ -2,7 +2,7 @@ import default_image from '../logo/default_user.jpg';
 import formatDistance from 'date-fns/formatDistance';
 
 const CommentDetail = ({ comment }) => {
-  const image = comment.author.image? `/${comment.author.image}` : default_image;
+  const image = comment.author.image? comment.author.image : default_image;
   const author = `${comment.author.firstName} ${comment.author.lastName}`;
   const commentDate = `${formatDistance(new Date(comment.updatedAt), new Date())}`
   return (

@@ -26,7 +26,7 @@ const upload = multer({
   fileFilter,
   storage: multerS3({
     s3: s3,
-    bucket: 'tj-images',
+    bucket: process.env.AWS_BUCKET_NAME,
     contentType: multerS3.AUTO_CONTENT_TYPE,
     limits: {
       fileSize: 1024 * 1024 * 5

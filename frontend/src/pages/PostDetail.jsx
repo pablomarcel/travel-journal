@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import formatDistance from 'date-fns/formatDistance';
 import CommentList from "../components/CommentList";
 import CommentForm from "../components/CommentForm";
+import default_image from '../logo/default_user.jpg';
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -71,6 +72,9 @@ const PostDetail = () => {
     }
   };
 
+  // Get author image
+  const authorImage = post.author? post.author.image : default_image;
+
   return (
     <Container fluid>
       <div className='title bottom__line'>{post.title}</div>
@@ -80,8 +84,9 @@ const PostDetail = () => {
             {post.image ? <Card.Img src = {post.image} alt={post.title} /> : ''}
             <Card.Body>
               <Card.Text>
-                {post.updatedAt? `Last modified: ${formatDistance(new Date(post.updatedAt), new Date())}`:''}
-                {post.author ? ` - Author: ${post.author.firstName} ${post.author.lastName}`:''}
+                <img src={authorImage} alt = '' className='author-small-image' />
+                {post.author ? ` ${post.author.firstName} ${post.author.lastName}`:''}
+                {post.updatedAt? ` - Last modified: ${formatDistance(new Date(post.updatedAt), new Date())}`:''}
               </Card.Text>
             </Card.Body>
           </Card>
