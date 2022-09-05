@@ -22,6 +22,11 @@ const getAllPosts = async () => {
   return response.data
 }
 
+const searchPostsByTitle = async(search) => {
+  const response = await axios.get(`api/posts/search?text=${search}`);
+  return response.data
+}
+
 // Get user posts by user token
 const getPostsByUser = async (token) => {
   const config = {
@@ -76,6 +81,7 @@ const postService = {
   getPostByPostId,
   deletePost,
   updatePost,
+  searchPostsByTitle,
 }
 
 export default postService

@@ -2,9 +2,17 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
-const fs = require('fs');
+// const fs = require('fs');
+require('dotenv').config();
+const S3 = require('aws-sdk').S3;
 
 module.exports = {}
+
+const s3 = new S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+  region: process.env.AWS_BUCKET_REGION
+});
 
 // Generate JWT
 const generateToken = (id) => {
@@ -99,11 +107,22 @@ module.exports.updateUser = asyncHandler( async (userId, newObj) => {
   // Delete the old image if it doesnot match the new one in images folder
   if (oldUser.image) {
     if (location && location !== oldUser.image) {
-      fs.unlink(oldUser.image, (err) => {
-        if (err) return {error: 'Image not found!'};
-        // if no error, file has been deleted successfully
-        // console.log('File deleted!');
-      });      
+      // Delete image from local folder
+      // fs.unlink(oldUser.image, (err) => {
+      //   if (err) return {error: 'Image not found!'};
+      //   // if no error, file has been deleted successfully
+      //   // console.log('File deleted!');
+      // });
+      // Delete old image in AWS S3
+      const imageKey = oldUser.image.replace(process.env.AWS_IMAGE_PATH, '');
+      const params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: imageKey
+      };
+      s3.deleteObject(params, function(err, data) {
+        if (err) return {error: 'Image not found!'}; // an error occurred
+        // If no error, image has been deleted successfully
+      });
     }
   }
   if (password) {

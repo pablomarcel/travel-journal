@@ -36,7 +36,7 @@ const Profile = () => {
           </div>
           {currentUser.image ? (
             <div className="pb-3">
-              <img src={`/${currentUser.image}`} alt = '' className='author-image' />
+              <img src={currentUser.image} alt = '' className='author-image' />
             </div>): null
           }
           <div className="d-grid gap-2">
