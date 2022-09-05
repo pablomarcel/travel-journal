@@ -50,7 +50,7 @@ function UserForm() {
 
   useEffect(() => {
     if (!image || image.length < 1) return;
-    image instanceof Object ? setImagePath(URL.createObjectURL(image)) : setImagePath(`/${image}`)
+    image instanceof Object ? setImagePath(URL.createObjectURL(image)) : setImagePath(image)
   }, [image]);
 
   const onChange = (e) => {

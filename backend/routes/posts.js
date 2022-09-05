@@ -39,6 +39,21 @@ router.get('/user', protect, asyncHandler(async(req, res, next) => {
   }
 }))
 
+
+// curl http://localhost:5000/api/posts/search?text="text search"
+router.get('/search', asyncHandler(async(req, res, next) => {
+  const { text } = req.query;
+  let posts;
+  if (text) {
+    posts = await postData.searchPostsByTitle(text);
+  }
+  if (posts) {
+    res.status(200).json(posts);
+  } else {
+    res.status(500).send({error: "Something went wrong. Please try again."})
+  }
+}))
+
 // curl -X POST -H "Content-Type: multipart/form-data" -d '{"title":"test title", "content":"test content", "city":"Seattle","country":"USA"}' http://localhost:5000/api/posts
 router.post('/', protect, upload.single('image'), asyncHandler(async(req, res, next) => {
   const postInfo = {...req.body, ...req.file}
