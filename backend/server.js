@@ -7,7 +7,9 @@ const { errorHandler } = require('./middleware/errorMiddleware');
 const connectDB = require('./config/db');
 
 
-connectDB();
+if (process.env.NODE_ENV != 'test') {
+  connectDB();
+}
 
 const server = express();
 server.use(express.json());
