@@ -108,7 +108,7 @@ My Favorite Posts: display all the user's favorite posts
 
 ## Travel Journal URL, API and Frontend
 
-[**LINK: Travel Journal URL**](https://travel-journal-pablo.herokuapp.com/)
+[**LINK: Travel Journal URL**](https://travel-journal22.herokuapp.com/)
 
 ## Developing This API
 
