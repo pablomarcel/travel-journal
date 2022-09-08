@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import formatDistance from 'date-fns/formatDistance';
+// import { FaSearch } from 'react-icons/fa';
 
 const Home = () => {
   const [toggleSlideShow, setToggleSlideShow] = useState(true);

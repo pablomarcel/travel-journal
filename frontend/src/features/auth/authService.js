@@ -71,7 +71,6 @@ const getUserById = async (userId) => {
 
 }
 
-
 const authService = {
   register,
   logout,

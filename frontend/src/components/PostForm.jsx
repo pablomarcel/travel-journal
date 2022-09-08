@@ -32,10 +32,10 @@ function PostForm({ postId, togglePostForm, returnAddForm }) {
         city: '',
         country: '',
         content: '',
-        airBnBPrice: '',
-        hotelPrice: '',
-        couplePrice: '',
-        familyPrice: '',
+        airBnBPrice: 0,
+        hotelPrice: 0,
+        couplePrice: 0,
+        familyPrice: 0,
       })
       setImage('');     
       return
@@ -50,10 +50,10 @@ function PostForm({ postId, togglePostForm, returnAddForm }) {
           city: res.data[0].city? res.data[0].city : '',
           country: res.data[0].country? res.data[0].country : '',
           content: res.data[0].content? res.data[0].content : '',
-          airBnBPrice: res.data[0].airBnBPrice? res.data[0].airBnBPrice : '',
-          hotelPrice: res.data[0].hotelPrice? res.data[0].hotelPrice : '',
-          couplePrice: res.data[0].couplePrice? res.data[0].couplePrice : '',
-          familyPrice: res.data[0].familyPrice? res.data[0].familyPrice : '',
+          airBnBPrice: res.data[0].airBnBPrice? res.data[0].airBnBPrice : 0,
+          hotelPrice: res.data[0].hotelPrice? res.data[0].hotelPrice : 0,
+          couplePrice: res.data[0].couplePrice? res.data[0].couplePrice : 0,
+          familyPrice: res.data[0].familyPrice? res.data[0].familyPrice : 0,
         })
       })
       .catch(err => {
@@ -77,24 +77,25 @@ function PostForm({ postId, togglePostForm, returnAddForm }) {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Title and content are mandatory fields
+    if (!title || !content) {
+      toast.error('Title and content are required');
+      return
+    }
 
     if (!postId) {
-      if (!title || !content) {
-        toast.error('Title and content are required');
-      } else {
-        const postData = {
-          title,
-          city,
-          country,
-          content,
-          airBnBPrice,
-          hotelPrice,
-          couplePrice,
-          familyPrice,
-          image
-        }
-        dispatch(createPost(postData))
+      const postData = {
+        title,
+        city,
+        country,
+        content,
+        airBnBPrice,
+        hotelPrice,
+        couplePrice,
+        familyPrice,
+        image
       }
+      dispatch(createPost(postData))
     } else {
       // Update post
       const postData = {

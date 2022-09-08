@@ -73,7 +73,7 @@ const PostDetail = () => {
   };
 
   // Get author image
-  const authorImage = post.author? post.author.image : default_image;
+  const authorImage = post.author && post.author.image ? post.author.image : default_image;
 
   return (
     <Container fluid>

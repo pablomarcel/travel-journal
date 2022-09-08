@@ -6,7 +6,6 @@ import { FaUser } from 'react-icons/fa'
 import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 import { Container } from 'react-bootstrap'
-// import Image from 'react-bootstrap/Image'
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -25,13 +24,13 @@ function Register() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isLoading, isError, message, isSuccess } = useSelector(
     (state) => state.auth
   )
 
   useEffect(() => {
     if (isError) {
-      toast.error(message)
+      toast.error(message.error);
     }
 
     if (isSuccess || user) {
@@ -55,7 +54,11 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault()
-
+    // Check if all mandatory fields are valid or not
+    if (!email || !firstName || !lastName || !password) {
+      toast.error('Email, password, first name and last name are mandatory!')
+      return
+    }
     if (password !== password2) {
       toast.error('Passwords do not match')
     } else {
@@ -95,6 +98,7 @@ function Register() {
               value={firstName}
               placeholder='First name'
               onChange={onChange}
+              required
             />
             <input
               type='text'
@@ -104,6 +108,7 @@ function Register() {
               value={lastName}
               placeholder='Last name'
               onChange={onChange}
+              required
             />
           </div>
           <div className='form-group'>
@@ -115,6 +120,7 @@ function Register() {
               value={email}
               placeholder='Enter your email'
               onChange={onChange}
+              required
             />
           </div>
           <div className='form-group'>
