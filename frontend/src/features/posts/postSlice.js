@@ -219,7 +219,7 @@ export const postSlice = createSlice({
         state.isLoading = false
         state.isSuccess = true
         state.posts = state.posts.filter(
-          (post) => post._id === action.payload.id
+          (post) => post._id !== action.payload._id
         )
         state.posts.unshift(action.payload)
       })

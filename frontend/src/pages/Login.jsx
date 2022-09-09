@@ -24,7 +24,7 @@ function Login() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message)
+      toast.error(message.error);
     }
 
     if (isSuccess || user) {
@@ -44,6 +44,10 @@ function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault()
+    if (!email || !password) {
+      toast.error('Please enter your email and password!')
+      return
+    }
 
     const userData = {
       email,
@@ -78,6 +82,7 @@ function Login() {
               value={email}
               placeholder='Enter your email'
               onChange={onChange}
+              required
             />
           </div>
           <div className='form-group'>
@@ -89,6 +94,7 @@ function Login() {
               value={password}
               placeholder='Enter password'
               onChange={onChange}
+              required
             />
           </div>
 
