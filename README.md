@@ -106,9 +106,55 @@ My Favorite Posts: display all the user's favorite posts
 
 # Documentation
 
-## Travel Journal URL, API and Frontend
+## Travel Journal Frontend URL
 
 [**LINK: Travel Journal URL**](https://travel-journal22.herokuapp.com/)
+
+## Travel Journal API URLs
+
+GET posts
+
+https://travel-journal22.herokuapp.com/api/posts
+
+GET posts/post/:id
+
+https://travel-journal22.herokuapp.com/api/posts/post/630e9e6e3612e809e389ce1a
+
+GET posts/post/user
+
+https://travel-journal22.herokuapp.com/api/posts/user/
+
+GET comments/post/:id
+
+https://travel-journal22.herokuapp.com/api/comments/post/630e9e6e3612e809e389ce1a
+
+GET favoriteposts
+
+https://travel-journal22.herokuapp.com/api/favoriteposts
+
+GET posts search
+
+https://travel-journal22.herokuapp.com/api/posts/search?text=${Cherry}
+
+POST favoriteposts
+
+https://travel-journal22.herokuapp.com/api/favoriteposts/
+
+POST comments
+
+https://travel-journal22.herokuapp.com/api/favoriteposts/
+
+POST posts
+
+https://travel-journal22.herokuapp.com/api/posts/
+
+PUT posts/:id
+
+https://travel-journal22.herokuapp.com/api/posts/6315166a009cf76e7f207e87
+
+DELETE posts/:id
+
+https://travel-journal22.herokuapp.com/api/posts/63162c8378d70a6a9b4ff0e4
 
 ## Developing This API
 
