@@ -84,6 +84,23 @@ export const getPostByPostId = createAsyncThunk(
   }
 )
 
+export const searchPostsByTitle = createAsyncThunk(
+  'posts/searchPostsByTitle',
+  async (search, thunkAPI) => {
+    try {
+      return await postService.searchPostsByTitle(search)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 // Update user post
 export const updatePost = createAsyncThunk(
   'posts/put',
@@ -169,6 +186,19 @@ export const postSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      .addCase(searchPostsByTitle.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(searchPostsByTitle.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.posts = action.payload
+      })
+      .addCase(searchPostsByTitle.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
       .addCase(getPostByPostId.pending, (state) => {
         state.isLoading = true
       })
@@ -189,7 +219,7 @@ export const postSlice = createSlice({
         state.isLoading = false
         state.isSuccess = true
         state.posts = state.posts.filter(
-          (post) => post._id === action.payload.id
+          (post) => post._id !== action.payload._id
         )
         state.posts.unshift(action.payload)
       })

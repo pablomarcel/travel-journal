@@ -6,6 +6,7 @@ const dotenv = require('dotenv').config();
 const { errorHandler } = require('./middleware/errorMiddleware');
 const connectDB = require('./config/db');
 
+
 if (process.env.NODE_ENV != 'test') {
   connectDB();
 }

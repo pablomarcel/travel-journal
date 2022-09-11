@@ -15,7 +15,7 @@ const NavBar = () => {
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
   const username = user ? `${user.firstName} ${user.lastName}` : '' ;
-  const userImage = user && user.image ? <img src={`/${user.image}`} alt = '' className='nav-image' /> : null;
+  const userImage = user && user.image ? <img src={user.image} alt = '' className='nav-image' /> : null;
   const handleLogout = async () => {
     try {
       dispatch(logout())

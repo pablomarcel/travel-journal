@@ -106,9 +106,55 @@ My Favorite Posts: display all the user's favorite posts
 
 # Documentation
 
-## Travel Journal URL, API and Frontend
+## Travel Journal Frontend URL
 
-[**LINK: Travel Journal URL**](https://travel-journal-pablo.herokuapp.com/)
+[**LINK: Travel Journal URL**](https://travel-journal22.herokuapp.com/)
+
+## Travel Journal API URLs
+
+GET posts
+
+https://travel-journal22.herokuapp.com/api/posts
+
+GET posts/post/:id
+
+https://travel-journal22.herokuapp.com/api/posts/post/630e9e6e3612e809e389ce1a
+
+GET posts/post/user
+
+https://travel-journal22.herokuapp.com/api/posts/user/
+
+GET comments/post/:id
+
+https://travel-journal22.herokuapp.com/api/comments/post/630e9e6e3612e809e389ce1a
+
+GET favoriteposts
+
+https://travel-journal22.herokuapp.com/api/favoriteposts
+
+GET posts search
+
+https://travel-journal22.herokuapp.com/api/posts/search?text=${Cherry}
+
+POST favoriteposts
+
+https://travel-journal22.herokuapp.com/api/favoriteposts/
+
+POST comments
+
+https://travel-journal22.herokuapp.com/api/favoriteposts/
+
+POST posts
+
+https://travel-journal22.herokuapp.com/api/posts/
+
+PUT posts/:id
+
+https://travel-journal22.herokuapp.com/api/posts/6315166a009cf76e7f207e87
+
+DELETE posts/:id
+
+https://travel-journal22.herokuapp.com/api/posts/63162c8378d70a6a9b4ff0e4
 
 ## Developing This API
 
@@ -122,13 +168,13 @@ Create a .env file in the root project directory with the following code:
 ```
 NODE_ENV = development
 
-PORT = 8000
+PORT = 5000
 
 MONGO_URI = "mongodb+srv://<admin>:<password>@<cluster>.mongodb.net/travel_journal?retryWrites=true&w=majority"
 
 JWT_SECRET = c-team2022
 ```
-Run npm run dev to start the local server. You should see a logged statement telling you Server is listening on http://localhost:8000.
+Run npm run dev to start the local server. You should see a logged statement telling you Server is listening on http://localhost:5000.
 Use curl or API client of your choice to browse the various endpoints contained in this project. 
 
 

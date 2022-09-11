@@ -2,9 +2,17 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
-const fs = require('fs');
+// const fs = require('fs');
+require('dotenv').config();
+const S3 = require('aws-sdk').S3;
 
 module.exports = {}
+
+const s3 = new S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY,
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+  region: process.env.AWS_BUCKET_REGION
+});
 
 // Generate JWT
 const generateToken = (id) => {
@@ -43,7 +51,7 @@ module.exports.findByCredentials = asyncHandler(async (userObj) => {
 
 // Create a new user
 module.exports.create = asyncHandler(async (newObj) => {
-  const { firstName, lastName, email, password, path } = newObj;
+  const { firstName, lastName, email, password, location } = newObj;
   // validate that the user doesn't already exist in the database
   let alreadyExists = await findByEmail(email)
   if(alreadyExists){return {error:"This email is already in use"}}
@@ -62,7 +70,7 @@ module.exports.create = asyncHandler(async (newObj) => {
     lastName,
     email,
     password: hashedPassword,
-    image: path
+    image: location
   })
 
   if (user) {
@@ -81,7 +89,7 @@ module.exports.create = asyncHandler(async (newObj) => {
 
 module.exports.updateUser = asyncHandler( async (userId, newObj) => {
   // Get updated user info from newObj
-  const { email, password, oldPassword, path } = newObj;
+  const { email, password, oldPassword, location } = newObj;
   // Get old user data by userid
   const oldUser = await User.findById(userId);
 
@@ -98,12 +106,23 @@ module.exports.updateUser = asyncHandler( async (userId, newObj) => {
 
   // Delete the old image if it doesnot match the new one in images folder
   if (oldUser.image) {
-    if (path && path !== oldUser.image) {
-      fs.unlink(oldUser.image, (err) => {
-        if (err) return {error: 'Image not found!'};
-        // if no error, file has been deleted successfully
-        // console.log('File deleted!');
-      });      
+    if (location && location !== oldUser.image) {
+      // Delete image from local folder
+      // fs.unlink(oldUser.image, (err) => {
+      //   if (err) return {error: 'Image not found!'};
+      //   // if no error, file has been deleted successfully
+      //   // console.log('File deleted!');
+      // });
+      // Delete old image in AWS S3
+      const imageKey = oldUser.image.replace(process.env.AWS_IMAGE_PATH, '');
+      const params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: imageKey
+      };
+      s3.deleteObject(params, function(err, data) {
+        if (err) return {error: 'Image not found!'}; // an error occurred
+        // If no error, image has been deleted successfully
+      });
     }
   }
   if (password) {
@@ -115,9 +134,9 @@ module.exports.updateUser = asyncHandler( async (userId, newObj) => {
   } else {
     newObj.password = oldUser.password;
   }
-  // Update new image path for user's body data
-  if (path) {
-    newObj.image = path;
+  // Update new image location for user's body data
+  if (location) {
+    newObj.image = location;
   }
   // Update user data to database
   const updatedUser = await User.findByIdAndUpdate(userId, newObj, {

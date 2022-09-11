@@ -1,9 +1,17 @@
 const asyncHandler = require('express-async-handler');
-const fs = require('fs');
+// const fs = require('fs');
 const Post = require('../models/postModel');
 const ObjectId = require('mongodb').ObjectId;
+require('dotenv').config();
+const S3 = require('aws-sdk').S3;
 
 module.exports = {}
+
+const s3 = new S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+    region: process.env.AWS_BUCKET_REGION
+});
 
 // Get all posts from posts collection
 module.exports.getAllPosts = asyncHandler(async () => {
@@ -59,7 +67,7 @@ module.exports.getPostsByUser = asyncHandler(async (userId) => {
 })
 
 module.exports.createPost = asyncHandler(async(userId, newObj) => {
-  const { title, content, city, country, airBnBPrice, hotelPrice, couplePrice, familyPrice, path } = newObj;
+  const { title, content, city, country, airBnBPrice, hotelPrice, couplePrice, familyPrice, location } = newObj;
   // Check if title and content are valid or not
   if (!title || !content) {
     return {error: 'Title and content are required!'}
@@ -75,7 +83,7 @@ module.exports.createPost = asyncHandler(async(userId, newObj) => {
     hotelPrice,
     couplePrice,
     familyPrice,
-    image: path,
+    image: location,
   })
 
   if (post) {
@@ -88,7 +96,7 @@ module.exports.createPost = asyncHandler(async(userId, newObj) => {
 // Update a post by postId 
 module.exports.updatePost = asyncHandler(async (postId, userId, newObj) => {
   // Store new post values to vars
-  const { path } = newObj;
+  const { location } = newObj;
   // Get post by id
   const oldPost = await Post.findById(postId);
   
@@ -108,16 +116,27 @@ module.exports.updatePost = asyncHandler(async (postId, userId, newObj) => {
 
   // Delete the old image if it doesnot match the new one from images folder
   if (oldPost.image) {
-    if (path && path !== oldPost.image) {
-      fs.unlink(oldPost.image, (err) => {
-        if (err) return {error: 'Image not found!'};
-        // if no error, file has been deleted successfully
-      });      
+    if (location && location !== oldPost.image) {
+      // Delete image in local folder
+      // fs.unlink(oldPost.image, (err) => {
+      //   if (err) return {error: 'Image not found!'};
+      //   // if no error, file has been deleted successfully
+      // });
+      // Delete old image in AWS S3
+      const imageKey = oldPost.image.replace(process.env.AWS_IMAGE_PATH, '');
+      const params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: imageKey
+      };
+      s3.deleteObject(params, function(err, data) {
+        if (err) return {error: 'Image not found!'}; // an error occurred
+        // If no error, image has been deleted successfully
+      });
     }
   }
-  // Update new image path for user's body data
-  if (path) {
-    newObj.image = path;
+  // Update new image location for user's body data
+  if (location) {
+    newObj.image = location;
   }
   // console.log(req.body);
   const updatedPost = await Post.findByIdAndUpdate(postId, newObj, {
@@ -146,13 +165,50 @@ module.exports.deletePost = asyncHandler(async (postId, userId) => {
   }
   // delete post's image if exists in images folder
   if (post.image) {
-    fs.unlink(post.image, (err) => {
-      if (err) return {error: 'Image not found!'};
-      // if no error, file has been deleted successfully
+    // Delete image from local folder
+    // fs.unlink(post.image, (err) => {
+    //   if (err) return {error: 'Image not found!'};
+    //   // if no error, file has been deleted successfully
+    // });
+    // Delete image from AWS S3 bucket
+    const imageKey = post.image.replace(process.env.AWS_IMAGE_PATH, '');
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: imageKey
+    };
+    s3.deleteObject(params, function(err, data) {
+      if (err) return {error: 'Image not found!'}; // an error occurred
+      // If no error, image has been deleted successfully
     });
   }
 
   await post.remove()
 
   return { id: postId }
+})
+
+// Search posts by post's title
+module.exports.searchPostsByTitle = asyncHandler(async(search) => {
+  const pipeline = [
+    {
+      '$search': {
+        'index': 'title_autocomplete', 
+        'autocomplete': {
+          'query': search, // search content
+          'path': 'title',
+        }
+      }
+    }, {
+      '$limit': 5
+    }, {
+      '$project': {
+        '_id': 1, 
+        'title': 1, 
+        'content': 1, 
+        'updatedAt': 1,
+      }
+    }
+  ];
+  let posts = await Post.aggregate(pipeline);
+  return posts;
 })

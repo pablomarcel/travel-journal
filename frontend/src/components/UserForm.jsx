@@ -50,7 +50,7 @@ function UserForm() {
 
   useEffect(() => {
     if (!image || image.length < 1) return;
-    image instanceof Object ? setImagePath(URL.createObjectURL(image)) : setImagePath(`/${image}`)
+    image instanceof Object ? setImagePath(URL.createObjectURL(image)) : setImagePath(image)
   }, [image]);
 
   const onChange = (e) => {
@@ -65,6 +65,7 @@ function UserForm() {
     if (oldPassword || password || password2) {
       if (password !== password2) {
         toast.error('Passwords do not match')
+        return
       }
     } 
     const userData = {
@@ -93,13 +94,8 @@ function UserForm() {
         navigate(`/profile/${user._id}`);
       })
       .catch(err => {
-        if(err.response) {
-          if (err.response.status===400) {
-            toast.error('Email already exists.');
-          };
-          if (err.response.status===401) {
-            toast.error('Old password is incorrect!');
-          }
+        if (err.response) {
+          toast.error(err.response.data);
         }
       })
   }

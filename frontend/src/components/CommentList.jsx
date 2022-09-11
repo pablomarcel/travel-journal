@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CommentDetail from './CommentDetail';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { FiX } from 'react-icons/fi';
+import { FaTrashAlt } from 'react-icons/fa';
 
 const CommentList = ({ comments, refreshCommentData }) => {
   const { user } = useSelector((state) => state.auth);
@@ -32,7 +32,7 @@ const CommentList = ({ comments, refreshCommentData }) => {
         <div key = {comment._id} className='comment'>
           {user && user._id === comment.author._id ? (
             <button onClick={() => deleteComment(comment._id)} className= 'close'>
-              <FiX />
+              <FaTrashAlt />
             </button>)
           : ''}
           {/* Comment list component */}
