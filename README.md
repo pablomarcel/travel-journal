@@ -159,8 +159,11 @@ https://travel-journal22.herokuapp.com/api/posts/63162c8378d70a6a9b4ff0e4
 ## Developing This API
 
 Make sure you have version 14 or 16 of Node.js installed on your computer.
-In your terminal, from inside this project directory, run npm install to install the project dependencies.
-You may also need to change the directory/folder to 'frontend', and run npm install to install additional project dependencies.
+
+In your terminal, from inside this project directory, run `npm install` to install the project dependencies.
+
+You may also need to change the directory/folder to 'frontend', and run `npm install` to install additional project dependencies.
+
 Create a .env file in the root project directory with the following code: 
 ```
 NODE_ENV = development
@@ -203,7 +206,7 @@ PUT /userModel/:id
 
 ## Get One Comment
 
-Path id parameter is a hexadecimal id. Responses for failures will include a field of error.
+Path `id` field is a hexadecimal id. Responses for failures will include a field of error.
 
 Example good request: `curl http://localhost:5000/api/comments/post/6304549cae0ccea9638cad1e`
 
@@ -214,7 +217,7 @@ Example bad response: `{error: 'No comment found with the post id 6304549cae0cce
 
 ## Create a Comment
 
-Responses for failures will include a field of error.
+Requires `userId`, `postId`, and `comment` fields. Responses for failures will include a field of error.
 
 Example good request: `curl -X POST -H "Content-Type: application/json" -d '{"userId":"63019debd198b257dfd0088b", "postId":"63019debd198b257dfd00ee4"}' http://localhost:5000/api/comments`
 
@@ -229,7 +232,7 @@ Example failure response: `{error: 'Invalid comment data'}`
 
 ## Delete a Comment
 
-Responses for failures will include a field of error.
+Requires path `id` field. Responses for failures will include a field of error.
 
 Example good request: `curl -X DELETE http://localhost:5000/api/comments/6304549cae0ccea9638cad1e`
 
@@ -240,7 +243,7 @@ Example failure response: `{error: 'Comment not found.'}`
 
 ## Get All Favorite Posts by a User
 
-Responses for failures will include a field of error.
+Requires `userId` to exist in `req.user.id`. Responses for failures will include a field of error.
 
 Example good request: `curl http://localhost:5000/api/comments/post/6304549cae0ccea9638cad1e`
 
@@ -251,13 +254,13 @@ Example bad response: `{error: 'No favorite found with the user id 63019debd198b
 
 ## Create a Favorite Post
 
-Responses for failures will include a field of error.
+Requires `userId` and `postId` fields. Responses for failures will include a field of error.
 
 Example good request: `curl -X POST -H "Content-Type: application/json" -d '{"userId":"63019debd198b257dfd0088b", "postId":"63019debd198b257dfd00ee4"}' http://localhost:5000/api/comments`
 
 Example response: ```[]```
 
-Example response if post already exists with the same userId and postId: `{error: 'The post already exists in your favorite post collection.'}`
+Example response if `post` already exists with the same `userId` and `postId`: `{error: 'The post already exists in your favorite post collection.'}`
 
 Example bad request: `curl -X POST -H "Content-Type: application/json" -d '{"userId":"63019debd198b257dfd0088b"}' http://localhost:5000/api/comments`
 
@@ -268,7 +271,7 @@ Example failure response: `{error: 'Invalid my favorite post data.'}`
 
 ## Delete a Favorite Post
 
-Responses for failures will include a field of error.
+Requires path `id` field and `userId` to exist in `req.user.id`.Responses for failures will include a field of error.
 
 Example good request: `curl -X DELETE http://localhost:5000/api/comments/6304549cae0ccea9638cad1e`
 
@@ -290,7 +293,7 @@ Example bad response: `{error: "Something went wrong. Please try again."}`
 
 ## Get a Post
 
-Responses for failures will include a field of error.
+Requires path `id` field. Responses for failures will include a field of error.
 
 Example good request: `curl http://localhost:5000/api/posts/post/63019debd198b257dfd0088b`
 
@@ -301,7 +304,7 @@ Example bad response: `{error: 'No post found with id 63019debd198b257dfd0088b.'
 
 ## Get All Posts by a User
 
-Responses for failures will include a field of error.
+Requires `userId` to exist within `req.user.id`. Responses for failures will include a field of error.
 
 Example good request: `curl http://localhost:5000/api/posts/user`
 
@@ -312,7 +315,7 @@ Example bad response: `{error: 'No post found with the user id 63019debd198b257d
 
 ## Create a Post
 
-Responses for failures will include a field of error.
+Requires `title` and 'content` fields. `userId` is required to exist in `req.user.id`. Responses for failures will include a field of error.
 
 Example good request: `curl -X POST -H "Content-Type: multipart/form-data" -d '{"title":"test title", "content":"test content", "city":"Seattle","country":"USA"}' http://localhost:5000/api/posts`
 
@@ -327,38 +330,38 @@ Example failure response: `{error: 'Invalid post data'}`
 
 ## Update a Post
 
-Responses for failures will include a field of error.
+Requires path `id` field and `userId` to exist in `req.user.id`. Responses for failures will include a field of error.
 
 Example good request: `curl -X PUT -H "Content-Type: multipart/form-data" -d '{"title":"test", "content":"test content", "city":"test city","country":"USA"}' http://localhost:5000/api/posts/63019debd198b257dfd0088b`
 
 Example response: ```[]```
 
-Example bad response if postId is not found: `{error: 'Post not found'}`
+Example bad response if `postId` is not found: `{error: 'Post not found'}`
 
-Example bad response if userId is not found: `{ error: 'User not found'}`
+Example bad response if `userId` is not found: `{ error: 'User not found'}`
 
-Example bad response if user is not authenticated: `{error: 'User not authorized'}`
+Example bad response if `user` is not authenticated: `{error: 'User not authorized'}`
 
-Example bad response if image could not be replaced: `{error: 'Image not found!'}`
+Example bad response if `image` could not be replaced: `{error: 'Image not found!'}`
 
 Example failure response: `{error: "Something went wrong. Please try again."}`
 
 
 ## Delete a Post
 
-Responses for failures will include a field of error.
+Requires path `id` field and `userId` to exist in `req.user.id`. Responses for failures will include a field of error.
 
 Example good request: `curl -X DELETE http://localhost:5000/api/posts/63019debd198b257dfd0088b`
 
 Example response: ```[]```
 
-Example bad response if postId is not found: `{error: 'Post not found'}`
+Example bad response if `postId` is not found: `{error: 'Post not found'}`
 
-Example bad response if userId is not found: `{ error: 'User not found'}`
+Example bad response if `userId` is not found: `{ error: 'User not found'}`
 
-Example bad response if user is not authenticated: `{error: 'User not authorized'}`
+Example bad response if `user` is not authenticated: `{error: 'User not authorized'}`
 
-Example bad response if image could not be replaced/does not exist: `{error: 'Image not found!'}`
+Example bad response if `image` could not be replaced/does not exist: `{error: 'Image not found!'}`
 
 
 ## Review User Information
@@ -372,22 +375,22 @@ Example response: ```[]```
 
 ## Login a User
 
-Responses for failures will include a field of error.
+Requires fields `email` and `password`. Responses for failures will include a field of error.
 
 Example good request: `curl -X POST -H "Content-Type: application/json" -d '{"email":"test@uw.edu", "password":"secrets!"}' http://localhost:5000/api/users/login`
 
 Example response: ```[]```
 
-Example bad response if email is not found: `{error: 'No user found with email test@uw.edu.'}`
+Example bad response if `email` is not found: `{error: 'No user found with email test@uw.edu.'}`
 
-Example bad response if email is found but is not associated with a password within the database: `{error: "User doesn't have password?"}`
+Example bad response if `email` is found but is not associated with a password within the database: `{error: "User doesn't have password?"}`
 
-Example bad response if password is incorrect: `{error: "Password is incorrect!"}`
+Example bad response if `password` is incorrect: `{error: "Password is incorrect!"}`
 
 
 ## Register a User
 
-Responses for failures will include a field of error.
+Requires fields `firstName`, `lastName`, `email`, `password`. Responses for failures will include a field of error.
 
 Example good request: `curl -X POST -H "Content-Type: multipart/form-data" -d '{"firstName":"test", "lastName":"lo", "email":"test@uw.edu","password":"secrets!"}' http://localhost:5000/api/users/register`
 
@@ -397,23 +400,23 @@ Example bad request: `curl -X POST -H "Content-Type: multipart/form-data" -d '{"
 
 Example bad response: `{error: "Users must have a name, password, and email."}`
 
-Example bad response if email already exists in database: `{error:"This email is already in use"}`
+Example bad response if `email` already exists in database: `{error:"This email is already in use"}`
 
 Example failure response: `{error:'Invalid user data'}`
 
 
 ## Update User Information
 
-Responses for failures will include a field of error.
+Requires fields `firstName`, `lastName`, `email`, `password`. Responses for failures will include a field of error.
 
 Example good request: `curl -X PUT -H "Content-Type: multipart/form-data" -d '{"firstName":"test", "lastName":"lo", "email":"test@uw.edu","password":"secrets!"}' http://localhost:5000/api/users/573a13a3f29313caabd0e77b`
 
 Example response: ```[]```
 
-Example bad response if email already exists in database: `{error: 'Email already exists.'}`
+Example bad response if `email` already exists in database: `{error: 'Email already exists.'}`
 
-Example bad response if password is incorrect: `{error: 'Old password is incorrect!'}`
+Example bad response if `password` is incorrect: `{error: 'Old password is incorrect!'}`
 
-Example bad response if image fails to be replaced/does not exist: `{error: 'Image not found!'}`
+Example bad response if `image` fails to be replaced/does not exist: `{error: 'Image not found!'}`
 
 Example failure response: `{error: "Something went wrong. Please try again."}`
