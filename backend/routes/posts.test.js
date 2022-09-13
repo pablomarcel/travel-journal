@@ -7,9 +7,6 @@ const postData = require("../dataInterface/posts");
 jest.mock('../middleware/authMiddleware');
 const authMock = require('../middleware/authMiddleware');
 
-// jest.mock('../middleware/fileUpload');
-// const imgMock = require('../middleware/fileUpload');
-
 describe("/posts routes", () => {
 
   beforeEach(() => {
@@ -19,7 +16,7 @@ describe("/posts routes", () => {
   describe("GET /posts", () =>{
     it("should return an array of posts on success", async () => {
       postData.getAllPosts.mockResolvedValue([{_id: "631111a8c74bde475d900de9",
-      title: "example title"}]);
+        title: "example title"}]);
 
       const res = await request(server).get("/api/posts");
 
@@ -40,7 +37,7 @@ describe("/posts routes", () => {
   describe("GET /posts/post/:id", () =>{
     it("should return a single post on success", async () => {
       postData.getPostByPostId.mockResolvedValue({_id: "631111a8c74bde475d900de9",
-      title: "example title"});
+        title: "example title"});
 
       const res = await request(server).get("/api/posts/post/:id");
 
@@ -50,7 +47,7 @@ describe("/posts routes", () => {
 
     });
     it("should return an error message when no results returned", async () => {
-        postData.getPostByPostId.mockResolvedValue(null);
+      postData.getPostByPostId.mockResolvedValue(null);
 
       const res = await request(server).get("/api/posts/post/:id")
 
@@ -66,8 +63,10 @@ describe("/posts routes", () => {
         return next();
       })
 
-      postData.getPostsByUser.mockResolvedValue([{_id: "630ea30184c9d5dd0b5e50b7",
-      title: "example title"}]);
+      postData.getPostsByUser.mockResolvedValue([{
+        _id: "630ea30184c9d5dd0b5e50b7",
+        title: "example title"
+      }]);
 
       const res = await request(server).get("/api/posts/user");
 
@@ -88,7 +87,7 @@ describe("/posts routes", () => {
 
       expect(res.statusCode).toEqual(404);
       expect(res.body.error).toBeDefined();
-   });
+    });
   });
 
   describe("POST /posts", () =>{
@@ -108,7 +107,7 @@ describe("/posts routes", () => {
     });
 
     it("should return an error message if post fails to be created", async () => {
-      
+
       authMock.protect.mockImplementation(function(req, res, next) {
         req.user = "630ea30184c9d5dd0b5e50b7";
         return next();
@@ -122,49 +121,39 @@ describe("/posts routes", () => {
     });
   });
 
-  // describe("PUT /posts/:id", () =>{
-  //   it("should return the updated post on success", async () => {
+  describe("PUT /posts/:id", () =>{
+    it("should return the updated post on success", async () => {
 
-  //     authMock.protect.mockImplementation(function(req, res, next) {
-  //       req.user = "630ea30184c9d5dd0b5e50b7";
-  //       return next();
-  //     })
+      authMock.protect.mockImplementation(function(req, res, next) {
+        req.user = "630ea30184c9d5dd0b5e50b7";
+        return next();
+      })
 
-  //     // imgMock.upload.mockImplementation(function(req, res, next) {
-  //     //   return next();
-  //     // })
+      postData.updatePost.mockResolvedValue({
+        user:"630ea30184c9d5dd0b5e50b7",
+        title:"631111a8c74bde475d900de9"
+      });
 
-  //     postData.updatePost.mockResolvedValue({
-  //       user:"630ea30184c9d5dd0b5e50b7", 
-  //       title:"631111a8c74bde475d900de9"
-  //     });
+      const res = await request(server).put("/api/posts/:id")
 
-  //     const res = await request(server).post("/api/posts/:id")
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.error).not.toBeDefined();
+    });
 
-  //     expect(res.statusCode).toEqual(200);
-  //     expect(res.body.error).not.toBeDefined();
-  //   });
+    it("should return an error message if post fails to be created", async () => {
 
-  //   it("should return an error message if post fails to be created", async () => {
+      authMock.protect.mockImplementation(function(req, res, next) {
+        req.user = "630ea30184c9d5dd0b5e50b7";
+        return next();
+      })
 
-  //     authMock.protect.mockImplementation(function(req, res, next) {
-  //       req.user = "630ea30184c9d5dd0b5e50b7";
-  //       return next();
-  //     })
+      postData.updatePost.mockResolvedValue({ error: 'error'});
+      const res = await request(server).put("/api/posts/:id")
 
-  //     // imgMock.upload.mockImplementation(function(req, res, next) {
-  //     //   return next();
-  //     // })
-
-  //     postData.updatePost.mockResolvedValue({ error: 'error'});
-  //     const res = await request(server).post("/api/posts/:id")
-
-  //     console.log(res)
-
-  //     expect(res.statusCode).toEqual(400);
-  //     expect(res.body.error).toBeDefined();
-  //   });
-  // });
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.error).toBeDefined();
+    });
+  });
 
   describe("DELETE /posts/:id", () =>{
     it("should return id of deleted post on success", async () => {
@@ -177,7 +166,7 @@ describe("/posts routes", () => {
       postData.deletePost.mockResolvedValue({
         id: '630ea30184c9d5dd0b5e50b7'
       })
-      
+
       const res = await request(server).delete("/api/posts/:id")
 
       // console.log(res)
